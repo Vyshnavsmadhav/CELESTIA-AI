@@ -17,29 +17,35 @@ export default function Header() {
             grain
           </span>
           <span className="font-hanken text-[32px] font-light tracking-tighter text-primary">
-            <Link href="/">ARCHITECT.AI</Link>
+            <Link href="/">Celestia AI</Link>
           </span>
         </div>
         
         {/* Desktop Navigation */}
         <nav className="hidden md:flex gap-8">
-          <a
+          <Link
             className="font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-on-surface-variant hover:text-primary transition-all duration-300 px-3 py-2 rounded-none scale-[0.98] active:scale-95"
-            href="/#problems"
+            href="/"
           >
-            Strategy
-          </a>
+            HOME
+          </Link>
           <a
             className="font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-on-surface-variant hover:text-primary transition-all duration-300 px-3 py-2 rounded-none scale-[0.98] active:scale-95"
             href="/#philosophy"
           >
-            Philosophy
+            ABOUT
           </a>
           <a
             className="font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-on-surface-variant hover:text-primary transition-all duration-300 px-3 py-2 rounded-none scale-[0.98] active:scale-95"
             href="/#problems"
           >
-            Methodology
+            OUR APPROACH
+          </a>
+          <a
+            className="font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-on-surface-variant hover:text-primary transition-all duration-300 px-3 py-2 rounded-none scale-[0.98] active:scale-95"
+            href="/#about-us"
+          >
+            ABOUT US
           </a>
         </nav>
 
@@ -66,26 +72,33 @@ export default function Header() {
       {isOpen && (
         <div className="md:hidden border-t border-outline/20 bg-surface px-6 py-8 flex flex-col gap-6 animate-in fade-in slide-in-from-top-4 duration-200">
           <nav className="flex flex-col gap-4">
-            <a
+            <Link
               onClick={() => setIsOpen(false)}
               className="font-inter text-[14px] font-medium uppercase tracking-[0.15em] text-on-surface-variant hover:text-primary py-2"
-              href="/#problems"
+              href="/"
             >
-              Strategy
-            </a>
+              HOME
+            </Link>
             <a
               onClick={() => setIsOpen(false)}
               className="font-inter text-[14px] font-medium uppercase tracking-[0.15em] text-on-surface-variant hover:text-primary py-2"
               href="/#philosophy"
             >
-              Philosophy
+              ABOUT
             </a>
             <a
               onClick={() => setIsOpen(false)}
               className="font-inter text-[14px] font-medium uppercase tracking-[0.15em] text-on-surface-variant hover:text-primary py-2"
               href="/#problems"
             >
-              Methodology
+              OUR APPROACH
+            </a>
+            <a
+              onClick={() => setIsOpen(false)}
+              className="font-inter text-[14px] font-medium uppercase tracking-[0.15em] text-on-surface-variant hover:text-primary py-2"
+              href="/#about-us"
+            >
+              ABOUT US
             </a>
           </nav>
           <Link

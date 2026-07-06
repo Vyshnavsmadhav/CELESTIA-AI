@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "ARCHITECT.AI - Enterprise AI Consulting",
+  title: "Celestia AI - Enterprise AI Consulting",
   description: "Bespoke AI solutions engineered for complex business problems. We align bleeding-edge technology with fundamental economic drivers.",
 };
 
