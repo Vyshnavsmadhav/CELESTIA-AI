@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,7 +17,7 @@ export default function Header() {
             grain
           </span>
           <span className="font-hanken text-[32px] font-light tracking-tighter text-primary">
-            ARCHITECT.AI
+            <Link href="/">ARCHITECT.AI</Link>
           </span>
         </div>
         
@@ -24,19 +25,19 @@ export default function Header() {
         <nav className="hidden md:flex gap-8">
           <a
             className="font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-on-surface-variant hover:text-primary transition-all duration-300 px-3 py-2 rounded-none scale-[0.98] active:scale-95"
-            href="#problems"
+            href="/#problems"
           >
             Strategy
           </a>
           <a
             className="font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-on-surface-variant hover:text-primary transition-all duration-300 px-3 py-2 rounded-none scale-[0.98] active:scale-95"
-            href="#philosophy"
+            href="/#philosophy"
           >
             Philosophy
           </a>
           <a
             className="font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-on-surface-variant hover:text-primary transition-all duration-300 px-3 py-2 rounded-none scale-[0.98] active:scale-95"
-            href="#problems"
+            href="/#problems"
           >
             Methodology
           </a>
@@ -44,9 +45,9 @@ export default function Header() {
 
         {/* Schedule Call Action */}
         <div className="hidden md:block">
-          <button className="inline-flex items-center justify-center bg-primary text-on-primary px-8 py-3 rounded-none font-inter text-[12px] font-semibold uppercase tracking-widest hover:opacity-90 transition-opacity cursor-pointer">
-            Schedule Call
-          </button>
+          <Link href="/contact" className="inline-flex items-center justify-center bg-primary text-on-primary px-8 py-3 rounded-none font-inter text-[12px] font-semibold uppercase tracking-widest hover:opacity-90 transition-opacity cursor-pointer">
+            LET'S CONNECT
+          </Link>
         </div>
 
         {/* Mobile Menu Button */}
@@ -68,31 +69,32 @@ export default function Header() {
             <a
               onClick={() => setIsOpen(false)}
               className="font-inter text-[14px] font-medium uppercase tracking-[0.15em] text-on-surface-variant hover:text-primary py-2"
-              href="#problems"
+              href="/#problems"
             >
               Strategy
             </a>
             <a
               onClick={() => setIsOpen(false)}
               className="font-inter text-[14px] font-medium uppercase tracking-[0.15em] text-on-surface-variant hover:text-primary py-2"
-              href="#philosophy"
+              href="/#philosophy"
             >
               Philosophy
             </a>
             <a
               onClick={() => setIsOpen(false)}
               className="font-inter text-[14px] font-medium uppercase tracking-[0.15em] text-on-surface-variant hover:text-primary py-2"
-              href="#problems"
+              href="/#problems"
             >
               Methodology
             </a>
           </nav>
-          <button
+          <Link
             onClick={() => setIsOpen(false)}
-            className="w-full bg-primary text-on-primary py-4 rounded-none font-inter text-[12px] font-semibold uppercase tracking-widest hover:bg-inverse-surface transition-colors cursor-pointer"
+            href="/contact"
+            className="w-full bg-primary text-on-primary py-4 rounded-none font-inter text-[12px] font-semibold uppercase tracking-widest hover:bg-inverse-surface transition-colors cursor-pointer text-center"
           >
-            Schedule Call
-          </button>
+            LET'S CONNECT
+          </Link>
         </div>
       )}
     </header>
