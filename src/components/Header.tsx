@@ -10,12 +10,6 @@ export default function Header() {
     <header className="bg-surface/80 backdrop-blur-xl fixed top-0 w-full z-50 border-b border-outline/20 shadow-[0_20px_50px_rgba(0,0,0,0.03)]">
       <div className="flex justify-between items-center w-full px-6 md:px-section-padding-h py-6 max-w-container-max mx-auto">
         <div className="flex items-center gap-2">
-          <span
-            aria-hidden="true"
-            className="material-symbols-outlined text-primary"
-          >
-            grain
-          </span>
           <span className="font-hanken text-[32px] font-light tracking-tighter text-primary">
             <Link href="/">Celestia AI</Link>
           </span>
