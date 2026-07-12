@@ -1,11 +1,13 @@
 import React from "react";
+import VintageStoryCard from "./VintageStoryCard";
 
 interface DomainItem {
   id: string;
   number: string;
   title: string;
   description: string;
-  link: string;
+  icon: React.ReactNode;
+  artwork: React.ReactNode;
 }
 
 const domains: DomainItem[] = [
@@ -14,14 +16,37 @@ const domains: DomainItem[] = [
     number: "01",
     title: "Commercial Excellence",
     description: "Dynamic pricing optimization, churn prediction models, and automated contract negotiation agents designed to maximize lifetime value and reduce acquisition friction.",
-    link: "#",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
+        <path d="M12 2C12 2 13 8 13.5 9.5C14 11 15 12 17 12C15 12 14 13 13.5 14.5C13 16 12 22 12 22C12 22 11 16 10.5 14.5C10 13 9 12 7 12C9 12 10 11 10.5 9.5C11 8 12 2 12 2Z" fill="currentColor" />
+      </svg>
+    ),
+    artwork: (
+      <img
+        src="/commercial_excellence_illustration.png"
+        alt="Commercial Excellence"
+        className="w-full h-full object-contain mix-blend-multiply opacity-[0.82]"
+      />
+    ),
   },
   {
     id: "procurement",
     number: "02",
     title: "Procurement Excellence",
     description: "Spend analytics, vendor risk assessment, and autonomous RFQ generation to drive down direct costs and secure critical supply chain vulnerabilities.",
-    link: "#",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
+        <path d="M12 3L4 7.5V16.5L12 21L20 16.5V7.5L12 3Z" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M12 12L20 7.5M12 12L4 7.5M12 12V21" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+    artwork: (
+      <img
+        src="/procurement_excellence_illustration.png"
+        alt="Procurement Excellence"
+        className="w-full h-full object-contain mix-blend-multiply opacity-[0.82]"
+      />
+    ),
   },
 ];
 
@@ -44,31 +69,16 @@ export default function Domains() {
         </div>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-gutter mt-stack-lg">
+      {/* Grid rendering Vintage Story Cards */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-stack-lg justify-items-center">
         {domains.map((domain) => (
-          <div
+          <VintageStoryCard
             key={domain.id}
-            className="p-10 hairline-all bg-surface-container-lowest cinematic-glow group hover:bg-surface transition-colors duration-500"
-          >
-            <span className="font-mono text-[14px] text-outline mb-6 block">
-              {domain.number}
-            </span>
-            <h4 className="font-hanken text-[32px] leading-[40px] text-primary mb-4">
-              {domain.title}
-            </h4>
-            <p className="font-inter text-[16px] leading-[28px] text-on-surface-variant mb-8">
-              {domain.description}
-            </p>
-            <a
-              className="inline-flex items-center gap-2 font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-primary group-hover:gap-4 transition-all duration-300"
-              href={domain.link}
-            >
-              View Insights{" "}
-              <span className="material-symbols-outlined text-[16px]">
-                arrow_forward
-              </span>
-            </a>
-          </div>
+            icon={domain.icon}
+            title={domain.title}
+            description={domain.description}
+            illustration={domain.artwork}
+          />
         ))}
       </div>
     </section>
