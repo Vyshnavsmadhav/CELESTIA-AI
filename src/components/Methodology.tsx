@@ -190,7 +190,7 @@ export default function Methodology() {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          Our Operational Blueprint: Sequenced principles engineered to navigate enterprise complexity and secure margin transformation.
+          WHAT WE DO?
         </h2>
 
         {/* Responsive Content Grid with subtle vertical dividers */}
