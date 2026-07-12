@@ -180,7 +180,7 @@ export default function Methodology() {
   return (
     <section
       ref={sectionRef}
-      className="bg-white py-[120px] md:py-[160px] px-6 md:px-section-padding-h border-t border-b border-outline/10 overflow-hidden"
+      className="bg-surface py-[120px] md:py-[160px] px-6 md:px-section-padding-h border-t border-b border-outline/10 overflow-hidden"
       id="methodology"
     >
       <div className="max-w-container-max mx-auto">
