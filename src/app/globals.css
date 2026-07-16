@@ -145,3 +145,66 @@ body {
   animation: vintageFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* Ambient Floating Panel Animations */
+@keyframes floatAmbient1 {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(1deg); }
+}
+@keyframes floatAmbient2 {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-25px) rotate(-1.5deg); }
+}
+@keyframes floatAmbient3 {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(0.8deg); }
+}
+
+/* Ambient Volumetric Light Sweep */
+@keyframes lightSweep {
+  0% { transform: translate(-30%, -30%) rotate(0deg); }
+  50% { transform: translate(-10%, -10%) rotate(180deg); }
+  100% { transform: translate(-30%, -30%) rotate(360deg); }
+}
+
+/* Entrance Animation with Premium Easing */
+@keyframes entranceFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-float-1 {
+  animation: floatAmbient1 16s ease-in-out infinite;
+}
+.animate-float-2 {
+  animation: floatAmbient2 22s ease-in-out infinite;
+}
+.animate-float-3 {
+  animation: floatAmbient3 18s ease-in-out infinite;
+}
+.animate-light-sweep {
+  animation: lightSweep 40s ease-in-out infinite;
+}
+.animate-entrance {
+  animation: entranceFadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Respect motion settings */
+@media (prefers-reduced-motion: reduce) {
+  .animate-float-1,
+  .animate-float-2,
+  .animate-float-3,
+  .animate-light-sweep,
+  .animate-entrance,
+  .animate-vintage-fade-up {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
