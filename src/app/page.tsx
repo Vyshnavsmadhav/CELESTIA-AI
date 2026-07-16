@@ -8,8 +8,8 @@ import Footer from "@/components/Footer";
 export default function Home() {
   return (
     <>
-      <Header />
-      <main className="pt-[104px]">
+      <Header hideUntilScroll={true} />
+      <main>
         <Hero />
         <Methodology />
         <Domains />

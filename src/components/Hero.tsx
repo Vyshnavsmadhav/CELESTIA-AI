@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Hero() {
   return (
-    <section className="relative min-h-[80vh] md:min-h-[85vh] w-full flex items-center overflow-hidden bg-black text-white">
+    <section className="relative h-screen w-full flex items-center overflow-hidden bg-black text-white">
       {/* Background Video */}
       <video
         autoPlay
