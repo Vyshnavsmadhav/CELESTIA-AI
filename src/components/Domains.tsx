@@ -64,9 +64,9 @@ export default function Domains() {
         {domains.map((domain, index) => (
           <div
             key={domain.id}
-            className="sticky w-full max-w-[620px] transition-all duration-500"
+            className="sticky w-full max-w-[840px] transition-all duration-500"
             style={{
-              top: `calc(15vh + ${index * 32}px)`,
+              top: `calc(15vh + ${index * 40}px)`,
               zIndex: index + 1,
             }}
           >

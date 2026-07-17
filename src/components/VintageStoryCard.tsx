@@ -21,7 +21,7 @@ export default function VintageStoryCard({
         fontFamily: "var(--font-inter), sans-serif",
         animationFillMode: "both",
       }}
-      className="relative w-full max-w-[620px] aspect-[16/10] p-[10px] group hover:-translate-y-2 hover:scale-[1.01] transition-all duration-[500ms] ease-[cubic-bezier(0.16,1,0.3,1)] animate-vintage-fade-up"
+      className="relative w-full max-w-[840px] aspect-[16/10] p-[10px] group hover:-translate-y-2 hover:scale-[1.01] transition-all duration-[500ms] ease-[cubic-bezier(0.16,1,0.3,1)] animate-vintage-fade-up"
     >
       {/* SVG Displacement Filter for Deckled Edge */}
       <svg style={{ position: "absolute", width: 0, height: 0, pointerEvents: "none" }}>
