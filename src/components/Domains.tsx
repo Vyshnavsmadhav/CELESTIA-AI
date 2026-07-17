@@ -59,16 +59,24 @@ export default function Domains() {
         </h2>
       </div>
       
-      {/* Grid rendering Vintage Story Cards */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-stack-lg justify-items-center">
-        {domains.map((domain) => (
-          <VintageStoryCard
+      {/* Sticky Stacked Vintage Story Cards */}
+      <div className="flex flex-col gap-24 mt-stack-lg items-center relative pb-32">
+        {domains.map((domain, index) => (
+          <div
             key={domain.id}
-            icon={domain.icon}
-            title={domain.title}
-            description={domain.description}
-            illustration={domain.artwork}
-          />
+            className="sticky w-full max-w-[620px] transition-all duration-500"
+            style={{
+              top: `calc(15vh + ${index * 32}px)`,
+              zIndex: index + 1,
+            }}
+          >
+            <VintageStoryCard
+              icon={domain.icon}
+              title={domain.title}
+              description={domain.description}
+              illustration={domain.artwork}
+            />
+          </div>
         ))}
       </div>
     </section>
