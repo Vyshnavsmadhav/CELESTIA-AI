@@ -37,7 +37,7 @@ export default function VintageStoryCard({
 
       {/* 1. Deckled Paper Background (Distorted via SVG filter) */}
       <div 
-        className="absolute inset-0 bg-[#F4EFE6] border border-[#D5CFC4] shadow-[0_16px_36px_rgba(40,36,30,0.12),_0_2px_8px_rgba(0,0,0,0.04)] overflow-hidden" 
+        className="absolute inset-0 bg-[var(--color-surface-container)] border border-[var(--color-outline-variant)]/60 shadow-[0_16px_36px_rgba(40,36,30,0.12),_0_2px_8px_rgba(0,0,0,0.04)] overflow-hidden" 
         style={{
           filter: "url(#deckle-filter)",
         }}
@@ -54,12 +54,12 @@ export default function VintageStoryCard({
         <div 
           className="absolute inset-0 pointer-events-none opacity-[0.08]" 
           style={{
-            background: "radial-gradient(circle, transparent 60%, #8A7E6B 100%)"
+            background: "radial-gradient(circle, transparent 60%, var(--color-outline) 100%)"
           }}
         />
 
         {/* Vintage Inner Border Line */}
-        <div className="absolute inset-[10px] pointer-events-none border border-[#DDD5C7]" />
+        <div className="absolute inset-[10px] pointer-events-none border border-[var(--color-outline-variant)]/30" />
       </div>
 
       {/* Main Grid Layout (40% Left / 60% Right) - Sits on top of the deckled background */}
@@ -69,14 +69,14 @@ export default function VintageStoryCard({
         <div className="w-[42%] h-full flex flex-col justify-between pr-4 select-none relative">
           
           {/* Top Row: Small Icon */}
-          <div className="text-stone-800/70 w-5 h-5 flex items-center justify-start scale-110">
+          <div className="text-primary/70 w-5 h-5 flex items-center justify-start scale-110">
             {icon}
           </div>
 
           {/* Middle: Title, Divider, Description */}
           <div className="my-auto flex flex-col justify-center">
             <h3 
-              className="text-stone-900 font-light text-[20px] sm:text-[23px] md:text-[25px] leading-[1.2] mb-3 tracking-[0.12em] uppercase"
+              className="text-primary font-light text-[20px] sm:text-[23px] md:text-[25px] leading-[1.2] mb-3 tracking-[0.12em] uppercase"
               style={{
                 fontFamily: "Georgia, serif"
               }}
@@ -85,16 +85,16 @@ export default function VintageStoryCard({
             </h3>
             
             {/* Thin Distressed Divider Line */}
-            <div className="w-16 h-[1px] bg-stone-900/20 mb-4" />
+            <div className="w-16 h-[1px] bg-primary/25 mb-4" />
             
-            <p className="text-stone-800/80 text-[11.5px] sm:text-[12.5px] leading-[1.65] max-w-full font-light line-clamp-4 pr-1">
+            <p className="text-on-surface-variant text-[11.5px] sm:text-[12.5px] leading-[1.65] max-w-full font-light line-clamp-4 pr-1">
               {description}
             </p>
           </div>
 
           {/* Bottom Brand Label */}
           <div>
-            <span className="font-mono text-[9px] sm:text-[10px] font-semibold uppercase tracking-[0.25em] text-stone-900/40 leading-none">
+            <span className="font-mono text-[9px] sm:text-[10px] font-semibold uppercase tracking-[0.25em] text-on-surface-variant/40 leading-none">
               CELESTIA AI
             </span>
           </div>
@@ -113,7 +113,7 @@ export default function VintageStoryCard({
           <div 
             className="absolute inset-y-0 left-0 w-[40%] pointer-events-none"
             style={{
-              background: "linear-gradient(to right, #F4EFE6 0%, rgba(244, 239, 230, 0.95) 25%, rgba(244, 239, 230, 0.6) 65%, transparent 100%)"
+              background: "linear-gradient(to right, var(--color-surface-container) 0%, rgba(234, 240, 234, 0.95) 25%, rgba(234, 240, 234, 0.6) 65%, transparent 100%)"
             }}
           />
         </div>
