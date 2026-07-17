@@ -10,15 +10,17 @@ interface PillarItem {
 }
 
 export default function Methodology() {
-  const [isVisible, setIsVisible] = useState(false);
+  const [sectionVisible, setSectionVisible] = useState(false);
+  const [visibleCards, setVisibleCards] = useState<boolean[]>([false, false, false, false]);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
+    const sectionObserver = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
+          setSectionVisible(true);
+          sectionObserver.unobserve(entry.target);
         }
       },
       {
@@ -28,13 +30,43 @@ export default function Methodology() {
     );
 
     if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+      sectionObserver.observe(sectionRef.current);
     }
+
+    // Observe each card to trigger scroll-based fade-in
+    const cardObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = Number(entry.target.getAttribute("data-index"));
+            if (!isNaN(index)) {
+              setVisibleCards((prev) => {
+                const updated = [...prev];
+                updated[index] = true;
+                return updated;
+              });
+              cardObserver.unobserve(entry.target);
+            }
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: "0px 0px -100px 0px", // triggers slightly before fully entering viewport
+      }
+    );
+
+    cardRefs.current.forEach((card) => {
+      if (card) {
+        cardObserver.observe(card);
+      }
+    });
 
     return () => {
       if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+        sectionObserver.unobserve(sectionRef.current);
       }
+      cardObserver.disconnect();
     };
   }, []);
 
@@ -187,7 +219,7 @@ export default function Methodology() {
         {/* Large, left-aligned headline with fade-up */}
         <h2
           className={`font-hanken text-[40px] sm:text-[56px] md:text-[68px] font-light leading-[1.1] tracking-[-0.02em] text-primary max-w-full lg:max-w-[65%] mb-8 md:mb-12 transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            sectionVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
           WHAT WE DO?
@@ -198,11 +230,15 @@ export default function Methodology() {
           {pillars.map((pillar, index) => (
             <div
               key={pillar.number}
-              style={{
-                transitionDelay: isVisible ? `${index * 100}ms` : "0ms",
+              ref={(el) => {
+                cardRefs.current[index] = el;
               }}
-              className={`group relative flex flex-col pt-10 pb-12 px-6 lg:px-10 bg-transparent transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5
-                ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}
+              data-index={index}
+              style={{
+                transitionDelay: visibleCards[index] ? `${index * 300}ms` : "0ms",
+              }}
+              className={`group relative flex flex-col pt-10 pb-12 px-6 lg:px-10 bg-transparent transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5
+                ${visibleCards[index] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"}
                 /* Bottom border for mobile/tablet */
                 border-b border-outline/10 last:border-b-0
                 /* Desktop configuration: Vertical divider on the right of all but the last item, no bottom border */
