@@ -91,8 +91,10 @@ export default function Hero() {
               : `translate3d(${mouseCoords.x * 20}px, ${mouseCoords.y * 20}px, 0)`,
             transition: isTouch ? "none" : "transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)",
           }}
-          className="absolute top-[15%] right-[10%] w-[180px] h-[320px] bg-white/[0.012] border border-white/[0.04] backdrop-blur-[2px] rounded-none hidden lg:block animate-float-1"
-        />
+          className="absolute top-[15%] right-[10%] w-[180px] h-[320px] hidden lg:block"
+        >
+          <div className="w-full h-full bg-white/[0.012] border border-white/[0.04] backdrop-blur-[2px] rounded-none animate-float-1" />
+        </div>
 
         {/* Floating Panel 2: Bottom Left Area */}
         <div
@@ -102,8 +104,10 @@ export default function Hero() {
               : `translate3d(${mouseCoords.x * -15}px, ${mouseCoords.y * -15}px, 0)`,
             transition: isTouch ? "none" : "transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)",
           }}
-          className="absolute bottom-[10%] left-[5%] w-[240px] h-[120px] bg-white/[0.008] border border-white/[0.03] backdrop-blur-[1px] rounded-none hidden md:block animate-float-2"
-        />
+          className="absolute bottom-[10%] left-[5%] w-[240px] h-[120px] hidden md:block"
+        >
+          <div className="w-full h-full bg-white/[0.008] border border-white/[0.03] backdrop-blur-[1px] rounded-none animate-float-2" />
+        </div>
 
         {/* Floating Panel 3: Mid Right Area */}
         <div
@@ -113,8 +117,10 @@ export default function Hero() {
               : `translate3d(${mouseCoords.x * 28}px, ${mouseCoords.y * 28}px, 0)`,
             transition: isTouch ? "none" : "transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)",
           }}
-          className="absolute top-[45%] right-[25%] w-[140px] h-[140px] bg-white/[0.01] border border-white/[0.03] backdrop-blur-[1.5px] rounded-none hidden xl:block animate-float-3"
-        />
+          className="absolute top-[45%] right-[25%] w-[140px] h-[140px] hidden xl:block"
+        >
+          <div className="w-full h-full bg-white/[0.01] border border-white/[0.03] backdrop-blur-[1.5px] rounded-none animate-float-3" />
+        </div>
       </div>
 
       {/* Content Container aligned with site grid */}
@@ -124,65 +130,42 @@ export default function Hero() {
           transform: `translate3d(0, ${contentTranslateY}px, 0)`,
           transition: "transform 0.1s linear, opacity 0.1s linear",
         }}
-        className="max-w-container-max mx-auto w-full px-6 md:px-section-padding-h relative z-20 py-stack-lg"
+        className="max-w-container-max mx-auto w-full px-6 md:px-section-padding-h relative z-20 py-stack-lg flex items-center justify-center min-h-[calc(100vh-80px)]"
       >
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter w-full">
-          <div className="col-span-1 md:col-span-8 flex flex-col justify-center">
-            
-            {/* Headline with Fade-in and Mouse Parallax */}
-            <div
-              className="opacity-0 animate-entrance"
-              style={{
-                animationDelay: "100ms",
-                transform: isTouch
-                  ? "none"
-                  : `translate3d(${mouseCoords.x * 4}px, ${mouseCoords.y * 4}px, 0)`,
-                transition: isTouch ? "none" : "transform 0.3s cubic-bezier(0.25, 1, 0.5, 1)",
-              }}
-            >
-              <h1 className="font-hanken text-[48px] md:text-[80px] font-light leading-[52px] md:leading-[90px] tracking-[-0.01em] md:tracking-[-0.02em] text-white mb-stack-md max-w-4xl">
-                We build AI that changes how enterprises operate.
-              </h1>
-            </div>
-
-            {/* Paragraph with Fade-in, Staggered delay, and Mouse Parallax */}
-            <div
-              className="opacity-0 animate-entrance"
-              style={{
-                animationDelay: "300ms",
-                transform: isTouch
-                  ? "none"
-                  : `translate3d(${mouseCoords.x * 2}px, ${mouseCoords.y * 2}px, 0)`,
-                transition: isTouch ? "none" : "transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)",
-              }}
-            >
-              <p className="font-inter text-[18px] leading-[32px] text-white/80 mb-stack-lg max-w-2xl">
-                Bespoke AI solutions engineered for complex business problems. We align bleeding-edge technology with fundamental economic drivers to deliver measurable margin improvement and operational velocity.
-              </p>
-            </div>
-
-            {/* CTA Buttons with Fade-in, Staggered delay, Mouse Parallax, and Refined Hover states */}
-            <div
-              className="opacity-0 animate-entrance"
-              style={{
-                animationDelay: "500ms",
-                transform: isTouch
-                  ? "none"
-                  : `translate3d(${mouseCoords.x * 1}px, ${mouseCoords.y * 1}px, 0)`,
-                transition: isTouch ? "none" : "transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)",
-              }}
-            >
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button className="bg-white text-black px-10 py-4 rounded-none font-inter text-[12px] font-semibold uppercase tracking-widest transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_15px_30px_rgba(255,255,255,0.08)] cursor-pointer">
-                  Schedule a Discovery Call
-                </button>
-                <button className="border border-white/30 bg-transparent text-white px-10 py-4 rounded-none font-inter text-[12px] font-semibold uppercase tracking-widest transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02] hover:bg-white/10 hover:shadow-[0_15px_30px_rgba(255,255,255,0.03)] cursor-pointer">
-                  Explore Commercial Model
-                </button>
-              </div>
-            </div>
-
+        <div className="flex flex-col items-center justify-center text-center max-w-3xl">
+          
+          {/* Headline with Fade-in and Mouse Parallax */}
+          <div
+            className="opacity-0 animate-entrance"
+            style={{
+              animationDelay: "200ms",
+              transform: isTouch
+                ? "none"
+                : `translate3d(${mouseCoords.x * 4}px, ${mouseCoords.y * 4}px, 0)`,
+              transition: isTouch ? "none" : "transform 0.3s cubic-bezier(0.25, 1, 0.5, 1)",
+            }}
+          >
+            <h1 className="font-hanken text-[42px] sm:text-[60px] lg:text-[72px] font-light leading-[1.1] tracking-[-0.02em] text-white mb-stack-md">
+              We build AI that changes how enterprises operate.
+            </h1>
           </div>
+
+          {/* Paragraph with Fade-in, Staggered delay, and Mouse Parallax */}
+          <div
+            className="opacity-0 animate-entrance"
+            style={{
+              animationDelay: "350ms",
+              transform: isTouch
+                ? "none"
+                : `translate3d(${mouseCoords.x * 2}px, ${mouseCoords.y * 2}px, 0)`,
+              transition: isTouch ? "none" : "transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)",
+            }}
+          >
+            <p className="font-inter text-[16px] sm:text-[18px] leading-[1.6] text-white/80 max-w-xl">
+              Bespoke AI solutions engineered for complex business problems. We align bleeding-edge technology with fundamental economic drivers to deliver measurable margin improvement and operational velocity.
+            </p>
+          </div>
+
         </div>
       </div>
     </section>
