@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import CursorGrid from "@/components/CursorGrid";
 
 export const metadata: Metadata = {
   title: "Celestia AI - Enterprise AI Consulting",
@@ -36,6 +37,23 @@ export default function RootLayout({
       </head>
       <body className="relative min-h-screen selection:bg-black selection:text-white overflow-x-hidden">
         <div className="texture-overlay" />
+        <div className="fixed inset-0 pointer-events-none z-30">
+          <CursorGrid
+            cellSize={60}
+            color="#ffffff"
+            radius={180}
+            falloff="smooth"
+            holdTime={400}
+            fadeDuration={800}
+            lineWidth={0.8}
+            maxOpacity={0.06}
+            fillOpacity={0.02}
+            gridOpacity={0.008}
+            cellRadius={0}
+            clickPulse={true}
+            pulseSpeed={600}
+          />
+        </div>
         {children}
       </body>
     </html>

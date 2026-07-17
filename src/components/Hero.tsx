@@ -78,8 +78,6 @@ export default function Hero() {
         />
       </div>
 
-      {/* Subtle baseline background grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:60px_60px] pointer-events-none z-5" />
 
       {/* Continuous Floating Ambient Architectural Elements */}
       <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden">
