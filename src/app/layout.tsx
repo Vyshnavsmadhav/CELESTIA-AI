@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "@/lib/gsap";
 import CursorGrid from "@/components/CursorGrid";
 
 export const metadata: Metadata = {
