@@ -322,14 +322,19 @@ export default function Methodology() {
                   ${visibleCards[index] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"}
                 `}
               >
+                {/* Square Card */}
                 <div
                   onMouseEnter={() => setHoveredIndex(index)}
                   onMouseLeave={() => setHoveredIndex(null)}
                   className="group relative w-full h-full flex flex-col justify-between p-8 bg-[var(--color-surface-container-lowest)] border border-[var(--color-outline-variant)]/30 rounded-[20px] shadow-[0_4px_12px_rgba(0,0,0,0.02)] transition-all duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-2 hover:shadow-[0_16px_36px_rgba(0,0,0,0.06),_0_2px_8px_rgba(0,0,0,0.02)] cursor-pointer z-10 overflow-hidden"
                 >
+                  {/* Volumetric background glow overlay */}
                   <div className="absolute inset-0 bg-gradient-to-br from-white via-white to-[var(--color-surface-container-low)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0 rounded-[20px]" />
+                  
+                  {/* Thin top accent line that expands on hover */}
                   <div className="absolute top-0 left-0 w-full h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] rounded-t-[20px] z-10" />
 
+                  {/* Top Content */}
                   <div className="flex justify-between items-start relative z-10">
                     <span className="font-mono text-[14px] text-outline font-semibold tracking-wider">
                       {pillar.number}
@@ -338,13 +343,16 @@ export default function Methodology() {
                       {pillar.icon}
                     </div>
                   </div>
+                  
+                  {/* Bottom Content */}
                   <h3 className="font-hanken text-[22px] font-semibold text-primary mb-2 leading-tight tracking-[0.01em] relative z-10">
                     {pillar.title}
                   </h3>
                 </div>
 
+                {/* Floating Information Tooltip Panel (Outside Card to prevent overflow clipping) */}
                 <div
-                  className={`absolute z-30 p-6 rounded-[20px] bg-white border border-[var(--color-outline-variant)]/20 shadow-[0_12px_32px_rgba(0,0,0,0.06),_0_2px_8px_rgba(0,0,0,0.02)] transition-all duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] top-1/2 w-[320px] pointer-events-none
+                  className={`absolute z-30 transition-all duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] top-1/2 w-[320px] pointer-events-none
                     ${isLeft ? "left-[280px]" : "right-[280px]"}
                     ${isHovered
                       ? "opacity-100 translate-y-[-50%]"
@@ -352,7 +360,7 @@ export default function Methodology() {
                     }
                   `}
                 >
-                  <p className="font-inter text-[14px] sm:text-[15px] leading-[22px] sm:leading-[24px] text-on-surface-variant font-light">
+                  <p className="font-inter text-[16px] leading-[28px] text-on-surface font-light">
                     {pillar.description}
                   </p>
                 </div>
@@ -361,9 +369,12 @@ export default function Methodology() {
           })}
         </div>
 
+        {/* Mobile Vertical Timeline Layout */}
         <div className="md:hidden relative flex flex-col items-center gap-[140px] py-10 px-4">
+          {/* Straight timeline line in background */}
           <div className="absolute top-[80px] bottom-[160px] left-1/2 w-[2px] bg-[var(--color-outline-variant)] opacity-20 -translate-x-1/2 z-0" />
 
+          {/* Mobile Cards */}
           {pillars.map((pillar, index) => {
             const isHovered = hoveredIndex === index;
 
@@ -382,6 +393,7 @@ export default function Methodology() {
                   ${visibleMobileCards[index] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"}
                 `}
               >
+                {/* Square Card (Tappable) */}
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
@@ -405,15 +417,16 @@ export default function Methodology() {
                   </h3>
                 </div>
 
+                {/* Floating Information Tooltip Panel (Below Card on Mobile, Outside Card to prevent clipping) */}
                 <div
-                  className={`absolute z-30 p-6 rounded-[20px] bg-white border border-[var(--color-outline-variant)]/20 shadow-[0_12px_32px_rgba(0,0,0,0.06),_0_2px_8px_rgba(0,0,0,0.02)] transition-all duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] top-[250px] left-1/2 w-[280px] sm:w-[300px] -translate-x-1/2 pointer-events-none
+                  className={`absolute z-30 transition-all duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] top-[255px] left-1/2 w-[280px] sm:w-[300px] -translate-x-1/2 pointer-events-none text-center
                     ${isHovered
                       ? "opacity-100 translate-y-0"
                       : "opacity-0 translate-y-4"
                     }
                   `}
                 >
-                  <p className="font-inter text-[14px] leading-[22px] text-on-surface-variant font-light">
+                  <p className="font-inter text-[16px] leading-[28px] text-on-surface font-light">
                     {pillar.description}
                   </p>
                 </div>
