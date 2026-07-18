@@ -12,8 +12,12 @@ interface PillarItem {
 export default function Methodology() {
   const [sectionVisible, setSectionVisible] = useState(false);
   const [visibleCards, setVisibleCards] = useState<boolean[]>([false, false, false, false]);
+  const [visibleMobileCards, setVisibleMobileCards] = useState<boolean[]>([false, false, false, false]);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
   const sectionRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const mobileCardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     const sectionObserver = new IntersectionObserver(
@@ -33,18 +37,26 @@ export default function Methodology() {
       sectionObserver.observe(sectionRef.current);
     }
 
-    // Observe each card to trigger scroll-based fade-in
     const cardObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const index = Number(entry.target.getAttribute("data-index"));
+            const isMobile = entry.target.getAttribute("data-mobile") === "true";
             if (!isNaN(index)) {
-              setVisibleCards((prev) => {
-                const updated = [...prev];
-                updated[index] = true;
-                return updated;
-              });
+              if (isMobile) {
+                setVisibleMobileCards((prev) => {
+                  const updated = [...prev];
+                  updated[index] = true;
+                  return updated;
+                });
+              } else {
+                setVisibleCards((prev) => {
+                  const updated = [...prev];
+                  updated[index] = true;
+                  return updated;
+                });
+              }
               cardObserver.unobserve(entry.target);
             }
           }
@@ -52,14 +64,16 @@ export default function Methodology() {
       },
       {
         threshold: 0.1,
-        rootMargin: "0px 0px -100px 0px", // triggers slightly before fully entering viewport
+        rootMargin: "0px 0px -100px 0px",
       }
     );
 
     cardRefs.current.forEach((card) => {
-      if (card) {
-        cardObserver.observe(card);
-      }
+      if (card) cardObserver.observe(card);
+    });
+
+    mobileCardRefs.current.forEach((card) => {
+      if (card) cardObserver.observe(card);
     });
 
     return () => {
@@ -70,11 +84,24 @@ export default function Methodology() {
     };
   }, []);
 
+  // Sync touch/click outside to dismiss active tooltips
+  useEffect(() => {
+    if (hoveredIndex === null) return;
+    const handleOuterClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest(".methodology-card-wrapper")) {
+        setHoveredIndex(null);
+      }
+    };
+    document.addEventListener("click", handleOuterClick);
+    return () => document.removeEventListener("click", handleOuterClick);
+  }, [hoveredIndex]);
+
   const pillars: PillarItem[] = [
     {
       number: "01",
-      title: "Diagnostics & Alignment",
-      description: "We initiate each engagement with a deep-dive analysis of your core financial levers and operational constraints. Before writing a single line of code, we map out the business case to align technical development with P&L performance.",
+      title: "Discovery",
+      description: "We begin by understanding your business objectives, existing workflows, and operational challenges to identify the highest-impact AI opportunities.",
       icon: (
         <svg viewBox="0 0 100 100" className="w-16 h-16 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]" fill="none" xmlns="http://www.w3.org/2000/svg">
           {/* Isometric grid lines */}
@@ -102,8 +129,8 @@ export default function Methodology() {
     },
     {
       number: "02",
-      title: "Architectural Engineering",
-      description: "Our solutions are custom-built to integrate natively with legacy systems. We design robust pipelines, high-throughput microservices, and dedicated LLM agent orchestration networks optimized for latency, security, and scalability.",
+      title: "Strategy",
+      description: "We design a scalable AI roadmap, define system architecture, select appropriate technologies, and establish an implementation plan aligned with your business goals.",
       icon: (
         <svg viewBox="0 0 100 100" className="w-16 h-16 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]" fill="none" xmlns="http://www.w3.org/2000/svg">
           {/* Stacked isometric layers */}
@@ -143,8 +170,8 @@ export default function Methodology() {
     },
     {
       number: "03",
-      title: "Integration & Delivery",
-      description: "We orchestrate seamless transition phases by deploying AI tools incrementally. Our hand-in-hand user enablement ensures zero downtime and rapid client adoption, embedding automated intelligence cleanly into daily workflows.",
+      title: "Development",
+      description: "We build, integrate, and deploy intelligent solutions that seamlessly connect with your existing tools, processes, and infrastructure.",
       icon: (
         <svg viewBox="0 0 100 100" className="w-16 h-16 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]" fill="none" xmlns="http://www.w3.org/2000/svg">
           {/* Isometric Pipeline / Track */}
@@ -178,8 +205,8 @@ export default function Methodology() {
     },
     {
       number: "04",
-      title: "Velocity & Optimization",
-      description: "Post-deployment, our feedback loops continually refine agent performance and response accuracy. We analyze system telemetry and live feedback in real time to capture new margin gains and accelerate process velocity.",
+      title: "Optimization",
+      description: "After deployment, we continuously monitor, refine, and optimize system performance using real-world data to maximize business value.",
       icon: (
         <svg viewBox="0 0 100 100" className="w-16 h-16 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]" fill="none" xmlns="http://www.w3.org/2000/svg">
           {/* Concentric growing rings */}
@@ -218,61 +245,169 @@ export default function Methodology() {
       <div className="max-w-container-max mx-auto">
         {/* Large, left-aligned headline with fade-up */}
         <h2
-          className={`font-hanken text-[40px] sm:text-[56px] md:text-[68px] font-light leading-[1.1] tracking-[-0.02em] text-primary max-w-full lg:max-w-[65%] mb-8 md:mb-12 transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          className={`font-hanken text-[40px] sm:text-[56px] md:text-[68px] font-light leading-[1.1] tracking-[-0.02em] text-primary max-w-full lg:max-w-[65%] mb-16 md:mb-24 transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
             sectionVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
           WHAT WE DO?
         </h2>
 
-        {/* Responsive Content Grid with subtle vertical dividers */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0">
-          {pillars.map((pillar, index) => (
-            <div
-              key={pillar.number}
-              ref={(el) => {
-                cardRefs.current[index] = el;
-              }}
-              data-index={index}
-              style={{
-                transitionDelay: visibleCards[index] ? `${index * 300}ms` : "0ms",
-              }}
-              className={`group relative flex flex-col pt-10 pb-12 px-6 lg:px-10 bg-transparent transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5
-                ${visibleCards[index] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"}
-                /* Bottom border for mobile/tablet */
-                border-b border-outline/10 last:border-b-0
-                /* Desktop configuration: Vertical divider on the right of all but the last item, no bottom border */
-                lg:border-b-0 lg:border-r lg:border-outline/10 lg:last:border-r-0
-                /* Tablet configuration: Right divider for odd items, bottom divider for first two items */
-                md:even:border-l md:even:border-outline/10 md:even:border-b md:[&:nth-child(3)]:border-b-0 md:[&:nth-child(4)]:border-b-0 md:even:border-r-0 lg:even:border-l-0 lg:even:border-r
-              `}
-            >
-              {/* Thin accent line at the top that expands on hover */}
-              <div className="absolute top-0 left-0 w-full h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)]" />
+        {/* Desktop Z-Layout Flow (centered container) */}
+        <div className="hidden md:block relative w-[640px] h-[1260px] mx-auto">
+          {/* Static Connecting Path SVG */}
+          <svg
+            className="absolute inset-0 w-full h-full text-[var(--color-outline-variant)] opacity-40 pointer-events-none z-0"
+            viewBox="0 0 640 1260"
+            fill="none"
+          >
+            <path
+              d="M 120 120 L 480 120 A 40 40 0 0 1 520 160 L 520 590 A 40 40 0 0 1 480 630 L 160 630 A 40 40 0 0 0 120 670 L 120 930 A 40 40 0 0 0 160 970 L 480 970 A 40 40 0 0 1 520 1010 L 520 1140"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeDasharray="5 5"
+            />
+          </svg>
 
-              {/* Number and Icon Alignment */}
-              <div className="flex justify-between items-start mb-8">
-                <span className="font-mono text-[14px] text-outline font-semibold tracking-wider">
-                  {pillar.number}
-                </span>
-                <div className="text-on-surface-variant group-hover:text-primary transition-colors duration-300">
-                  {pillar.icon}
+          {/* Cards */}
+          {pillars.map((pillar, index) => {
+            const isLeft = index % 2 === 0;
+            const isHovered = hoveredIndex === index;
+            const xPos = isLeft ? "left-0" : "left-[400px]";
+            const yPos = [
+              "top-[0px]",
+              "top-[340px]",
+              "top-[680px]",
+              "top-[1020px]"
+            ][index];
+
+            return (
+              <div
+                key={pillar.number}
+                ref={(el) => {
+                  cardRefs.current[index] = el;
+                }}
+                data-index={index}
+                data-mobile="false"
+                style={{
+                  transitionDelay: visibleCards[index] ? `${index * 150}ms` : "0ms",
+                }}
+                className={`absolute ${xPos} ${yPos} w-[240px] h-[240px] methodology-card-wrapper transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)]
+                  ${visibleCards[index] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"}
+                `}
+              >
+                {/* Square Card */}
+                <div
+                  onMouseEnter={() => setHoveredIndex(index)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                  className="group relative w-full h-full flex flex-col justify-between p-8 bg-[var(--color-surface-container-lowest)] border border-[var(--color-outline-variant)]/30 rounded-[20px] shadow-[0_4px_12px_rgba(0,0,0,0.02)] transition-all duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-2 hover:shadow-[0_16px_36px_rgba(0,0,0,0.06),_0_2px_8px_rgba(0,0,0,0.02)] cursor-pointer z-10"
+                >
+                  {/* Thin top accent line that expands on hover */}
+                  <div className="absolute top-0 left-0 w-full h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] rounded-t-[20px]" />
+
+                  {/* Top: Step Number & Icon */}
+                  <div className="flex justify-between items-start">
+                    <span className="font-mono text-[14px] text-outline font-semibold tracking-wider">
+                      {pillar.number}
+                    </span>
+                    <div className="text-on-surface-variant group-hover:text-primary transition-colors duration-300">
+                      {pillar.icon}
+                    </div>
+                  </div>
+                  {/* Bottom: Title */}
+                  <h3 className="font-hanken text-[22px] font-semibold text-primary mb-2 leading-tight tracking-[0.01em]">
+                    {pillar.title}
+                  </h3>
+                </div>
+
+                {/* Floating Information Tooltip Panel */}
+                <div
+                  className={`absolute z-30 p-6 rounded-[20px] bg-white border border-[var(--color-outline-variant)]/20 shadow-[0_12px_32px_rgba(0,0,0,0.06),_0_2px_8px_rgba(0,0,0,0.02)] transition-all duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] top-1/2 w-[320px] pointer-events-none
+                    ${isLeft ? "left-[280px]" : "right-[280px]"}
+                    ${isHovered
+                      ? "opacity-100 translate-y-[-50%]"
+                      : "opacity-0 translate-y-[-40%]"
+                    }
+                  `}
+                >
+                  <p className="font-inter text-[14px] sm:text-[15px] leading-[22px] sm:leading-[24px] text-on-surface-variant font-light">
+                    {pillar.description}
+                  </p>
                 </div>
               </div>
+            );
+          })}
+        </div>
 
-              {/* Title with Strong Hierarchy */}
-              <h3 className="font-hanken text-[22px] md:text-[24px] font-semibold text-primary mb-4 leading-tight tracking-[0.01em]">
-                {pillar.title}
-              </h3>
+        {/* Mobile Vertical Timeline Layout */}
+        <div className="md:hidden relative flex flex-col items-center gap-[140px] py-10 px-4">
+          {/* Straight timeline line in background */}
+          <div className="absolute top-[80px] bottom-[160px] left-1/2 w-[2px] bg-[var(--color-outline-variant)] opacity-20 -translate-x-1/2 z-0" />
 
-              {/* Description Paragraph (3-5 lines) */}
-              <p className="font-inter text-[15px] leading-[26px] text-on-surface-variant font-light">
-                {pillar.description}
-              </p>
-            </div>
-          ))}
+          {/* Mobile Cards */}
+          {pillars.map((pillar, index) => {
+            const isHovered = hoveredIndex === index;
+
+            return (
+              <div
+                key={pillar.number}
+                ref={(el) => {
+                  mobileCardRefs.current[index] = el;
+                }}
+                data-index={index}
+                data-mobile="true"
+                style={{
+                  transitionDelay: visibleMobileCards[index] ? `${index * 150}ms` : "0ms",
+                }}
+                className={`relative z-10 w-[240px] h-[240px] methodology-card-wrapper transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)]
+                  ${visibleMobileCards[index] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"}
+                `}
+              >
+                {/* Square Card (Tappable) */}
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setHoveredIndex(isHovered ? null : index);
+                  }}
+                  className="group relative w-full h-full flex flex-col justify-between p-8 bg-[var(--color-surface-container-lowest)] border border-[var(--color-outline-variant)]/30 rounded-[20px] shadow-[0_4px_12px_rgba(0,0,0,0.02)] transition-all duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-95 cursor-pointer z-10 animate-none"
+                >
+                  {/* Thin top accent line */}
+                  <div className="absolute top-0 left-0 w-full h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] rounded-t-[20px]" />
+
+                  {/* Top: Step Number & Icon */}
+                  <div className="flex justify-between items-start">
+                    <span className="font-mono text-[14px] text-outline font-semibold tracking-wider">
+                      {pillar.number}
+                    </span>
+                    <div className="text-on-surface-variant group-hover:text-primary transition-colors duration-300">
+                      {pillar.icon}
+                    </div>
+                  </div>
+                  {/* Bottom: Title */}
+                  <h3 className="font-hanken text-[22px] font-semibold text-primary mb-2 leading-tight tracking-[0.01em]">
+                    {pillar.title}
+                  </h3>
+                </div>
+
+                {/* Floating Information Tooltip Panel (Below Card on Mobile) */}
+                <div
+                  className={`absolute z-30 p-6 rounded-[20px] bg-white border border-[var(--color-outline-variant)]/20 shadow-[0_12px_32px_rgba(0,0,0,0.06),_0_2px_8px_rgba(0,0,0,0.02)] transition-all duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] top-[250px] left-1/2 w-[280px] sm:w-[300px] -translate-x-1/2 pointer-events-none
+                    ${isHovered
+                      ? "opacity-100 translate-y-0"
+                      : "opacity-0 translate-y-4"
+                    }
+                  `}
+                >
+                  <p className="font-inter text-[14px] leading-[22px] text-on-surface-variant font-light">
+                    {pillar.description}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
   );
 }
+
