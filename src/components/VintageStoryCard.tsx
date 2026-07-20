@@ -4,7 +4,7 @@ import React from "react";
 
 interface VintageStoryCardProps {
   title: string;
-  description: string;
+  description: React.ReactNode;
 }
 
 export default function VintageStoryCard({
@@ -78,9 +78,9 @@ export default function VintageStoryCard({
           {/* Thin Distressed Divider Line */}
           <div className="w-16 h-[1px] bg-primary/25 mb-4" />
           
-          <p className="text-on-surface-variant text-[13px] sm:text-[14px] leading-[1.75] font-light max-w-xl">
+          <div className="text-on-surface-variant text-[13px] sm:text-[14px] leading-[1.75] font-light max-w-xl text-left flex flex-col gap-4">
             {description}
-          </p>
+          </div>
         </div>
 
         {/* Bottom Brand Label */}
