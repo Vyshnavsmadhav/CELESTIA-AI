@@ -299,7 +299,7 @@ export default function Methodology() {
           {pillars.map((pillar, index) => {
             const isLeft = index % 2 === 0;
             const isHovered = hoveredIndex === index;
-            const xPos = isLeft ? "left-0" : "left-[400px]";
+            const xPos = isLeft ? "left-0 origin-left" : "right-0 origin-right";
             const yPos = [
               "top-[0px]",
               "top-[340px]",
@@ -318,7 +318,8 @@ export default function Methodology() {
                 style={{
                   transitionDelay: visibleCards[index] ? `${index * 150}ms` : "0ms",
                 }}
-                className={`absolute ${xPos} ${yPos} w-[240px] h-[240px] methodology-card-wrapper transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)]
+                className={`absolute ${xPos} ${yPos} h-[240px] methodology-card-wrapper transition-all duration-[500ms] ease-[cubic-bezier(0.16,1,0.3,1)]
+                  w-[240px] hover:w-[480px] z-10 hover:z-20
                   ${visibleCards[index] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"}
                 `}
               >
@@ -326,43 +327,35 @@ export default function Methodology() {
                 <div
                   onMouseEnter={() => setHoveredIndex(index)}
                   onMouseLeave={() => setHoveredIndex(null)}
-                  className="group relative w-full h-full flex flex-col justify-between p-8 bg-[var(--color-surface-container-lowest)] border border-[var(--color-outline-variant)]/30 rounded-[20px] shadow-[0_4px_12px_rgba(0,0,0,0.02)] transition-all duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-2 hover:shadow-[0_16px_36px_rgba(0,0,0,0.06),_0_2px_8px_rgba(0,0,0,0.02)] cursor-pointer z-10 overflow-hidden"
+                  className={`group relative w-full h-full flex ${isLeft ? "flex-row" : "flex-row-reverse"} p-8 bg-[var(--color-surface-container-lowest)] border border-[var(--color-outline-variant)]/30 rounded-[20px] shadow-[0_4px_12px_rgba(0,0,0,0.02)] transition-all duration-[500ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-2 hover:shadow-[0_16px_36px_rgba(0,0,0,0.06),_0_2px_8px_rgba(0,0,0,0.02)] cursor-pointer overflow-hidden`}
                 >
                   {/* Volumetric background glow overlay */}
                   <div className="absolute inset-0 bg-gradient-to-br from-white via-white to-[var(--color-surface-container-low)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0 rounded-[20px]" />
                   
                   {/* Thin top accent line that expands on hover */}
-                  <div className="absolute top-0 left-0 w-full h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] rounded-t-[20px] z-10" />
+                  <div className={`absolute top-0 ${isLeft ? "left-0 origin-left" : "right-0 origin-right"} w-[240px] group-hover:w-[480px] h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 transition-all duration-[500ms] ease-[cubic-bezier(0.16,1,0.3,1)] rounded-t-[20px] z-10`} />
 
-                  {/* Top Content */}
-                  <div className="flex justify-between items-start relative z-10">
-                    <span className="font-mono text-[14px] text-outline font-semibold tracking-wider">
-                      {pillar.number}
-                    </span>
-                    <div className="text-on-surface-variant group-hover:text-primary transition-colors duration-300">
-                      {pillar.icon}
+                  {/* Icon & Title Column (Fixed size) */}
+                  <div className="flex flex-col justify-between min-w-[176px] w-[176px] h-full relative z-10 shrink-0">
+                    <div className="flex justify-between items-start">
+                      <span className="font-mono text-[14px] text-outline font-semibold tracking-wider">
+                        {pillar.number}
+                      </span>
+                      <div className="text-on-surface-variant group-hover:text-primary transition-colors duration-300">
+                        {pillar.icon}
+                      </div>
                     </div>
+                    <h3 className="font-hanken text-[22px] font-semibold text-primary leading-tight tracking-[0.01em] transition-transform duration-300">
+                      {pillar.title}
+                    </h3>
                   </div>
                   
-                  {/* Bottom Content */}
-                  <h3 className="font-hanken text-[22px] font-semibold text-primary mb-2 leading-tight tracking-[0.01em] relative z-10">
-                    {pillar.title}
-                  </h3>
-                </div>
-
-                {/* Floating Information Tooltip Panel (Outside Card to prevent overflow clipping) */}
-                <div
-                  className={`absolute z-30 transition-all duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] top-1/2 w-[320px] pointer-events-none
-                    ${isLeft ? "left-[280px]" : "right-[280px]"}
-                    ${isHovered
-                      ? "opacity-100 translate-y-[-50%]"
-                      : "opacity-0 translate-y-[-40%]"
-                    }
-                  `}
-                >
-                  <p className="font-inter text-[16px] leading-[28px] text-on-surface font-light">
-                    {pillar.description}
-                  </p>
+                  {/* Expanding Description Column */}
+                  <div className={`flex flex-col justify-center min-w-[200px] w-[200px] ${isLeft ? "ml-8" : "mr-8"} opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 relative z-10`}>
+                    <p className="font-inter text-[13px] leading-[1.6] text-on-surface-variant font-light">
+                      {pillar.description}
+                    </p>
+                  </div>
                 </div>
               </div>
             );
@@ -412,23 +405,16 @@ export default function Methodology() {
                       {pillar.icon}
                     </div>
                   </div>
-                  <h3 className="font-hanken text-[22px] font-semibold text-primary mb-2 leading-tight tracking-[0.01em] relative z-10">
-                    {pillar.title}
-                  </h3>
-                </div>
-
-                {/* Floating Information Tooltip Panel (Below Card on Mobile, Outside Card to prevent clipping) */}
-                <div
-                  className={`absolute z-30 transition-all duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] top-[255px] left-1/2 w-[280px] sm:w-[300px] -translate-x-1/2 pointer-events-none text-center
-                    ${isHovered
-                      ? "opacity-100 translate-y-0"
-                      : "opacity-0 translate-y-4"
-                    }
-                  `}
-                >
-                  <p className="font-inter text-[16px] leading-[28px] text-on-surface font-light">
-                    {pillar.description}
-                  </p>
+                  <div className="relative z-10">
+                    <h3 className="font-hanken text-[22px] font-semibold text-primary leading-tight tracking-[0.01em] transition-transform duration-300">
+                      {pillar.title}
+                    </h3>
+                    <div className="max-h-0 opacity-0 group-hover:max-h-[120px] group-hover:opacity-100 group-hover:mt-3 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden">
+                      <p className="font-inter text-[13px] leading-[1.6] text-on-surface-variant font-light">
+                        {pillar.description}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             );

@@ -10,32 +10,7 @@ export default function Footer() {
           </span>
         </div>
         <div className="md:col-span-8 flex flex-col justify-between">
-          <nav className="flex flex-wrap gap-x-8 gap-y-4 mb-stack-lg md:justify-end">
-            <a
-              className="font-inter text-[16px] leading-[28px] text-on-surface-variant hover:opacity-70 transition-opacity cursor-pointer uppercase"
-              href="#"
-            >
-              Strategy
-            </a>
-            <a
-              className="font-inter text-[16px] leading-[28px] text-on-surface-variant hover:opacity-70 transition-opacity cursor-pointer uppercase"
-              href="#"
-            >
-              Operations
-            </a>
-            <a
-              className="font-inter text-[16px] leading-[28px] text-on-surface-variant hover:opacity-70 transition-opacity cursor-pointer uppercase"
-              href="#"
-            >
-              Leadership
-            </a>
-            <a
-              className="font-inter text-[16px] leading-[28px] text-on-surface-variant hover:opacity-70 transition-opacity cursor-pointer uppercase"
-              href="#"
-            >
-              Contact
-            </a>
-          </nav>
+
           <div className="flex justify-start md:justify-end">
             <span className="font-inter text-[14px] leading-[20px] text-on-surface-variant text-sm">
               © 2026 CELESTIA AI. ALL RIGHTS RESERVED.

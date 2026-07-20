@@ -142,7 +142,7 @@ export default function Hero() {
   }, [isTouch]);
 
   return (
-    <section ref={containerRef} className="relative w-full h-[600vh] bg-[#09090b] overflow-clip">
+    <section ref={containerRef} className="relative w-full h-[600vh] bg-[#09090b] overflow-clip z-20">
       <div 
         ref={stickyRef} 
         className="sticky top-0 left-0 w-full h-screen overflow-hidden flex items-center justify-center"
@@ -179,14 +179,7 @@ export default function Hero() {
           <p className="text-white/60 text-lg font-inter max-w-md">
             Most AI deployments in enterprise and government fail. We find the right use case, build the system, and own the outcome.
           </p>
-          <div className="mt-4">
-             <button className="px-6 py-3 rounded-full border border-white/20 text-white hover:bg-white hover:text-black transition-colors duration-300 font-medium text-sm inline-flex items-center gap-2 pointer-events-auto">
-                For Enterprise
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-             </button>
-          </div>
+
         </div>
 
         {/* Right Text (Scroll Phase) */}

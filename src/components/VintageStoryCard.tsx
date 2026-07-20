@@ -1,23 +1,43 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 interface VintageStoryCardProps {
   title: string;
-  description: React.ReactNode;
+  description: React.ReactNode | React.ReactNode[];
 }
 
 export default function VintageStoryCard({
   title,
   description,
 }: VintageStoryCardProps) {
+  const [isVisible, setIsVisible] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2, rootMargin: "0px 0px -50px 0px" }
+    );
+    if (cardRef.current) observer.observe(cardRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const descArray = Array.isArray(description) ? description : [description];
+
   return (
     <div
+      ref={cardRef}
       style={{
         fontFamily: "var(--font-inter), sans-serif",
         animationFillMode: "both",
       }}
-      className="relative w-full max-w-[840px] aspect-[16/9] p-[10px] group hover:-translate-y-2 hover:scale-[1.01] transition-all duration-[500ms] ease-[cubic-bezier(0.16,1,0.3,1)] animate-vintage-fade-up"
+      className={`relative w-full max-w-[840px] aspect-[16/9] p-[10px] group hover:-translate-y-2 hover:scale-[1.01] transition-all duration-[500ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${isVisible ? "animate-vintage-fade-up opacity-100" : "opacity-0 translate-y-8"}`}
     >
       {/* SVG Displacement Filter for Deckled Edge */}
       <svg style={{ position: "absolute", width: 0, height: 0, pointerEvents: "none" }}>
@@ -65,7 +85,7 @@ export default function VintageStoryCard({
         <div className="h-2" />
 
         {/* Middle: Title, Divider, Description */}
-        <div className="my-auto flex flex-col justify-center max-w-2xl mx-auto text-center items-center">
+        <div className="my-auto flex flex-col justify-center w-full max-w-3xl mx-auto text-center items-center">
           {title && (
             <>
               <h3 
@@ -78,12 +98,20 @@ export default function VintageStoryCard({
               </h3>
               
               {/* Thin Distressed Divider Line */}
-              <div className="w-16 h-[1px] bg-primary/25 mb-4" />
+              <div className="w-16 h-[1px] bg-primary/25 mb-5" />
             </>
           )}
           
-          <div className="text-on-surface-variant text-[13px] sm:text-[14px] leading-[1.75] font-light max-w-xl text-left flex flex-col gap-4">
-            {description}
+          <div className="text-on-surface-variant text-[15px] sm:text-[17px] md:text-[18px] leading-[1.85] font-light w-full px-4 sm:px-6 text-left flex flex-col gap-5 md:gap-6">
+            {descArray.map((desc, i) => (
+              <p 
+                key={i} 
+                className={isVisible ? "opacity-0 animate-vintage-fade-up" : "opacity-0"} 
+                style={{ animationDelay: `${0.3 + (i * 0.3)}s`, animationFillMode: "both" }}
+              >
+                {desc}
+              </p>
+            ))}
           </div>
         </div>
 
