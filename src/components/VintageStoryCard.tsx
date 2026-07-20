@@ -66,17 +66,21 @@ export default function VintageStoryCard({
 
         {/* Middle: Title, Divider, Description */}
         <div className="my-auto flex flex-col justify-center max-w-2xl mx-auto text-center items-center">
-          <h3 
-            className="text-primary font-light text-[22px] sm:text-[25px] md:text-[28px] leading-[1.2] mb-3 tracking-[0.12em] uppercase"
-            style={{
-              fontFamily: "Georgia, serif"
-            }}
-          >
-            {title}
-          </h3>
-          
-          {/* Thin Distressed Divider Line */}
-          <div className="w-16 h-[1px] bg-primary/25 mb-4" />
+          {title && (
+            <>
+              <h3 
+                className="text-primary font-light text-[22px] sm:text-[25px] md:text-[28px] leading-[1.2] mb-3 tracking-[0.12em] uppercase"
+                style={{
+                  fontFamily: "Georgia, serif"
+                }}
+              >
+                {title}
+              </h3>
+              
+              {/* Thin Distressed Divider Line */}
+              <div className="w-16 h-[1px] bg-primary/25 mb-4" />
+            </>
+          )}
           
           <div className="text-on-surface-variant text-[13px] sm:text-[14px] leading-[1.75] font-light max-w-xl text-left flex flex-col gap-4">
             {description}
@@ -84,12 +88,9 @@ export default function VintageStoryCard({
         </div>
 
         {/* Bottom Brand Label */}
-        <div className="flex justify-between items-center w-full select-none">
+        <div className="flex justify-center items-center w-full select-none">
           <span className="font-mono text-[9px] sm:text-[10px] font-semibold uppercase tracking-[0.25em] text-on-surface-variant/40 leading-none">
             CELESTIA AI
-          </span>
-          <span className="font-mono text-[9px] sm:text-[10px] font-semibold uppercase tracking-[0.25em] text-on-surface-variant/40 leading-none">
-            EST. 2025
           </span>
         </div>
       </div>

@@ -12,7 +12,7 @@ const domains: DomainItem[] = [
   {
     id: "origins",
     number: "01",
-    title: "Origins & Mission",
+    title: "",
     description: (
       <>
         <p>
@@ -27,7 +27,7 @@ const domains: DomainItem[] = [
   {
     id: "impact",
     number: "02",
-    title: "Expertise & Impact",
+    title: "",
     description: (
       <p>
         Thanks to AI, we can now develop and deploy <strong>custom tools</strong> at a <strong>fraction of the cost</strong> and in a matter of <strong>weeks</strong> to rapidly help our clients capture <strong>bottom line impact</strong>! Our founding team and network of experts has extensive experience on Commercial Excellence, Operational Excellence, Procurement and Human Relations topics - both in the industry and as management consultants to CXOs globally. And we're excited to partner with you on this journey!
