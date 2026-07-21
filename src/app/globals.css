@@ -239,6 +239,14 @@ body {
   animation: marqueeVertical 20s linear infinite;
 }
 
+@keyframes marqueeHorizontal {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee-horizontal {
+  animation: marqueeHorizontal 20s linear infinite;
+}
+
 /* Respect motion settings */
 @media (prefers-reduced-motion: reduce) {
   .animate-float-1,

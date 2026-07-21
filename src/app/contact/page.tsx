@@ -30,8 +30,8 @@ export default function ContactPage() {
   return (
     <>
       <Header />
-      <main className="pt-[104px] min-h-screen flex items-center justify-center bg-[#f7f6f2] py-16 px-4 md:px-8">
-        <div className="w-full max-w-3xl bg-[#fdfdfc] rounded-2xl p-8 md:p-12 border border-[#e8e7e3] shadow-[0_20px_50px_rgba(0,0,0,0.04)] transition-all duration-300">
+      <main className="pt-[104px] min-h-screen flex items-center justify-center bg-transparent py-16 px-4 md:px-8 relative z-10">
+        <div className="w-full max-w-3xl bg-gradient-to-b from-white to-[#fcfcfb] rounded-3xl p-8 md:p-12 border border-white shadow-[0_30px_80px_-20px_rgba(0,0,0,0.12),0_10px_30px_rgba(0,0,0,0.04),inset_0_1px_1px_rgba(255,255,255,1)] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-3 hover:shadow-[0_40px_100px_-20px_rgba(0,0,0,0.15),0_20px_40px_rgba(0,0,0,0.06),inset_0_1px_1px_rgba(255,255,255,1)] relative z-20">
           
           {submitted ? (
             <div className="text-center py-12 flex flex-col items-center justify-center animate-in fade-in slide-in-from-bottom-4 duration-300">
