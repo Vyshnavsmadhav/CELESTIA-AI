@@ -5,7 +5,6 @@ interface DomainItem {
   id: string;
   number: string;
   title: string;
-  title: string;
   description: React.ReactNode | React.ReactNode[];
 }
 
