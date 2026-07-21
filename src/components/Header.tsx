@@ -13,7 +13,6 @@ export default function Header({ hideUntilScroll = false }: HeaderProps) {
 
   useEffect(() => {
     if (!hideUntilScroll) {
-      setIsScrolled(true);
       return;
     }
 
@@ -52,30 +51,30 @@ export default function Header({ hideUntilScroll = false }: HeaderProps) {
           >
             HOME
           </Link>
-          <a
+          <Link
             className="font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-on-surface-variant hover:text-primary transition-all duration-300 px-3 py-2 rounded-none scale-[0.98] active:scale-95"
             href="/#philosophy"
           >
             ABOUT
-          </a>
-          <a
+          </Link>
+          <Link
             className="font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-on-surface-variant hover:text-primary transition-all duration-300 px-3 py-2 rounded-none scale-[0.98] active:scale-95"
             href="/#problems"
           >
             OUR APPROACH
-          </a>
-          <a
+          </Link>
+          <Link
             className="font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-on-surface-variant hover:text-primary transition-all duration-300 px-3 py-2 rounded-none scale-[0.98] active:scale-95"
             href="/#about-us"
           >
             ABOUT US
-          </a>
+          </Link>
         </nav>
 
         {/* Schedule Call Action */}
         <div className="hidden md:block">
           <Link href="/contact" className="inline-flex items-center justify-center bg-primary text-on-primary px-8 py-3 rounded-none font-inter text-[12px] font-semibold uppercase tracking-widest hover:opacity-90 transition-opacity cursor-pointer">
-            LET'S CONNECT
+            LET&apos;S CONNECT
           </Link>
         </div>
 
@@ -102,34 +101,34 @@ export default function Header({ hideUntilScroll = false }: HeaderProps) {
             >
               HOME
             </Link>
-            <a
+            <Link
               onClick={() => setIsOpen(false)}
               className="font-inter text-[14px] font-medium uppercase tracking-[0.15em] text-on-surface-variant hover:text-primary py-2"
               href="/#philosophy"
             >
               ABOUT
-            </a>
-            <a
+            </Link>
+            <Link
               onClick={() => setIsOpen(false)}
               className="font-inter text-[14px] font-medium uppercase tracking-[0.15em] text-on-surface-variant hover:text-primary py-2"
               href="/#problems"
             >
               OUR APPROACH
-            </a>
-            <a
+            </Link>
+            <Link
               onClick={() => setIsOpen(false)}
               className="font-inter text-[14px] font-medium uppercase tracking-[0.15em] text-on-surface-variant hover:text-primary py-2"
               href="/#about-us"
             >
               ABOUT US
-            </a>
+            </Link>
           </nav>
           <Link
             onClick={() => setIsOpen(false)}
             href="/contact"
             className="w-full bg-primary text-on-primary py-4 rounded-none font-inter text-[12px] font-semibold uppercase tracking-widest hover:bg-inverse-surface transition-colors cursor-pointer text-center"
           >
-            LET'S CONNECT
+            LET&apos;S CONNECT
           </Link>
         </div>
       )}

@@ -156,7 +156,7 @@ export default function ScrollAnimation() {
             DATA
           </div>
           <h2 className="text-white text-4xl md:text-5xl lg:text-[56px] font-light leading-[1.1] tracking-tight font-hanken">
-            The data powering the world's best AI.
+            The data powering the world&apos;s best AI.
           </h2>
           <p className="text-white/60 text-lg font-inter max-w-md">
             The models at the frontier run on Scale data. We source contributors with advanced degrees and deliver at the tier frontier AI demands.

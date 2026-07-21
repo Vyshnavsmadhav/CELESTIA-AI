@@ -75,22 +75,24 @@ export default function CursorGrid({
   });
   const wakeRef = useRef<(() => void) | null>(null);
 
-  propsRef.current = {
-    cellSize,
-    color,
-    radius,
-    falloff,
-    holdTime,
-    fadeDuration,
-    lineWidth,
-    maxOpacity,
-    fillOpacity,
-    gridOpacity,
-    cellRadius,
-    clickPulse,
-    pulseSpeed,
-    className
-  };
+  useEffect(() => {
+    propsRef.current = {
+      cellSize,
+      color,
+      radius,
+      falloff,
+      holdTime,
+      fadeDuration,
+      lineWidth,
+      maxOpacity,
+      fillOpacity,
+      gridOpacity,
+      cellRadius,
+      clickPulse,
+      pulseSpeed,
+      className
+    };
+  });
 
   useEffect(() => {
     const container = containerRef.current;

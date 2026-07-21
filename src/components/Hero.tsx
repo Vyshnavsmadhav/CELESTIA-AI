@@ -28,6 +28,16 @@ export default function Hero() {
   useEffect(() => {
     const motionMediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     setIsTouch(motionMediaQuery.matches);
+
+    // Initial load animation for hero text
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        heroTextRef.current?.children || [],
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, stagger: 0.15, duration: 1.2, ease: "power3.out" }
+      );
+    }, containerRef);
+    return () => ctx.revert();
   }, []);
 
   useLayoutEffect(() => {
@@ -102,10 +112,21 @@ export default function Hero() {
       
       tl.to(textLeftRef.current, {
         opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: "power3.out"
+        duration: 0.1,
       }, 2.6);
+
+      tl.fromTo(
+        textLeftRef.current?.children || [],
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          stagger: 0.15,
+          duration: 0.8,
+          ease: "power3.out"
+        },
+        2.6
+      );
 
       // Hold phase
       tl.to({}, { duration: 0.8 }, 3.6);
@@ -128,10 +149,21 @@ export default function Hero() {
 
       tl.to(textRightRef.current, {
         opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: "power3.out"
+        duration: 0.1,
       }, 4.9);
+
+      tl.fromTo(
+        textRightRef.current?.children || [],
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          stagger: 0.15,
+          duration: 0.8,
+          ease: "power3.out"
+        },
+        4.9
+      );
       
       // Hold before unpinning
       tl.to({}, { duration: 1 }, 5.9);
@@ -165,7 +197,7 @@ export default function Hero() {
         {/* Left Text (Scroll Phase) */}
         <div 
           ref={textLeftRef}
-          className="absolute left-[8%] md:left-[10%] w-[84%] md:w-[35%] opacity-0 translate-y-10 flex flex-col gap-6 z-40 pointer-events-none"
+          className="absolute left-[8%] md:left-[10%] w-[84%] md:w-[35%] opacity-0 flex flex-col gap-6 z-40 pointer-events-none"
         >
           <div className="flex items-center gap-2 text-white/50 uppercase tracking-widest text-xs font-semibold">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -185,7 +217,7 @@ export default function Hero() {
         {/* Right Text (Scroll Phase) */}
         <div 
           ref={textRightRef}
-          className="absolute right-[8%] md:right-[10%] w-[84%] md:w-[35%] opacity-0 translate-y-10 flex flex-col gap-6 z-40 pointer-events-none"
+          className="absolute right-[8%] md:right-[10%] w-[84%] md:w-[35%] opacity-0 flex flex-col gap-6 z-40 pointer-events-none"
         >
           <div className="flex items-center gap-2 text-white/50 uppercase tracking-widest text-xs font-semibold">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -194,7 +226,7 @@ export default function Hero() {
             DATA
           </div>
           <h2 className="text-white text-4xl md:text-5xl lg:text-[56px] font-light leading-[1.1] tracking-tight font-hanken">
-            The data powering the world's best AI.
+            The data powering the world&apos;s best AI.
           </h2>
           <p className="text-white/60 text-lg font-inter max-w-md">
             The models at the frontier run on Scale data. We source contributors with advanced degrees and deliver at the tier frontier AI demands.
