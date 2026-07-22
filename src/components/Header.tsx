@@ -30,6 +30,14 @@ export default function Header({ hideUntilScroll = false }: HeaderProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [hideUntilScroll]);
 
+  const handleAboutClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (typeof window !== "undefined" && window.location.pathname === "/about") {
+      e.preventDefault();
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      setIsOpen(false);
+    }
+  };
+
   return (
     <header className={`fixed top-0 w-full z-50 transition-all duration-500 ease-in-out border-b border-outline/20 shadow-[0_20px_50px_rgba(0,0,0,0.03)] bg-surface/80 backdrop-blur-xl ${
       isScrolled 
@@ -52,6 +60,7 @@ export default function Header({ hideUntilScroll = false }: HeaderProps) {
             HOME
           </Link>
           <Link
+            onClick={handleAboutClick}
             className="font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-on-surface-variant hover:text-primary transition-all duration-300 px-3 py-2 rounded-none scale-[0.98] active:scale-95"
             href="/about"
           >
@@ -64,6 +73,7 @@ export default function Header({ hideUntilScroll = false }: HeaderProps) {
             OUR APPROACH
           </Link>
           <Link
+            onClick={handleAboutClick}
             className="font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-on-surface-variant hover:text-primary transition-all duration-300 px-3 py-2 rounded-none scale-[0.98] active:scale-95"
             href="/about"
           >
@@ -102,7 +112,13 @@ export default function Header({ hideUntilScroll = false }: HeaderProps) {
               HOME
             </Link>
             <Link
-              onClick={() => setIsOpen(false)}
+              onClick={(e) => {
+                if (typeof window !== "undefined" && window.location.pathname === "/about") {
+                  handleAboutClick(e);
+                } else {
+                  setIsOpen(false);
+                }
+              }}
               className="font-inter text-[14px] font-medium uppercase tracking-[0.15em] text-on-surface-variant hover:text-primary py-2"
               href="/about"
             >
@@ -116,7 +132,13 @@ export default function Header({ hideUntilScroll = false }: HeaderProps) {
               OUR APPROACH
             </Link>
             <Link
-              onClick={() => setIsOpen(false)}
+              onClick={(e) => {
+                if (typeof window !== "undefined" && window.location.pathname === "/about") {
+                  handleAboutClick(e);
+                } else {
+                  setIsOpen(false);
+                }
+              }}
               className="font-inter text-[14px] font-medium uppercase tracking-[0.15em] text-on-surface-variant hover:text-primary py-2"
               href="/about"
             >

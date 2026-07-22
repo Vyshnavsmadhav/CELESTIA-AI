@@ -1,7 +1,8 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { gsap } from "@/lib/gsap";
 
 export default function AnimatedTimeline() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -37,28 +38,27 @@ export default function AnimatedTimeline() {
         ease: "none",
         scrollTrigger: {
           trigger: containerRef.current,
-          start: "top center", // Start drawing when the top of the container hits the center of the viewport
-          end: "bottom center", // Finish drawing when the bottom hits the center
-          scrub: 1, // Smooth scrubbing
+          start: "top bottom", // Start drawing as soon as it enters the screen
+          end: "bottom bottom", // Finish drawing when the bottom hits the screen bottom
+          scrub: true,
         },
       });
 
       // 2. Animate the cards revealing when the line reaches them
-      // We estimate the scroll progress needed for each card based on its Y position
-      // The timeline is 2000px high. 
-      // Card 1 is at Y=250 (12.5% down)
-      // Card 2 is at Y=750 (37.5% down)
-      // Card 3 is at Y=1250 (62.5% down)
-      // Card 4 is at Y=1750 (87.5% down)
+      // We map the trigger exactly to the Y position of the nodes (cy)
+      // Card 1 node cy=350 
+      // Card 2 node cy=850 
+      // Card 3 node cy=1350 
+      // Card 4 node cy=1850 
 
       const cards = [
-        { ref: card1Ref, yPos: 250 },
-        { ref: card2Ref, yPos: 750 },
-        { ref: card3Ref, yPos: 1250 },
-        { ref: card4Ref, yPos: 1750 },
+        { ref: card1Ref, yPos: 350 },
+        { ref: card2Ref, yPos: 850 },
+        { ref: card3Ref, yPos: 1350 },
+        { ref: card4Ref, yPos: 1850 },
       ];
 
-      cards.forEach((card, index) => {
+      cards.forEach((card) => {
         gsap.fromTo(
           card.ref.current,
           { opacity: 0, y: 50 },
@@ -69,9 +69,9 @@ export default function AnimatedTimeline() {
             ease: "power3.out",
             scrollTrigger: {
               trigger: containerRef.current,
-              // Start the animation when the container has scrolled down by yPos pixels, adjusted by viewport height
-              start: `top+=${card.yPos - 200} center`,
-              toggleActions: "play none none reverse", // Play on scroll down, reverse on scroll up
+              // Trigger exactly when the node reaches the 70% mark of the viewport (matching the ray)
+              start: `top+=${card.yPos} 70%`,
+              toggleActions: "play none none reverse",
             },
           }
         );
@@ -83,10 +83,10 @@ export default function AnimatedTimeline() {
   }, [pathLength]);
 
   return (
-    <div ref={containerRef} className="relative w-full max-w-[1000px] mx-auto h-[2000px] my-32">
+    <div ref={containerRef} className="relative w-full max-w-[1200px] mx-auto h-[2200px] my-32 px-4 md:px-12">
       
-      {/* Imane's Profile Picture at the Start */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center z-10">
+      {/* Imane's Profile Picture at the Start - Aligned to left (X=200 in viewBox scale) */}
+      <div className="absolute top-0 left-[20%] md:left-[240px] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center z-10">
         <div className="w-[120px] h-[120px] rounded-full overflow-hidden border-4 border-surface shadow-lg">
           <img 
             src="/images/founders/IMANE AJEBLI.webp" 
@@ -102,12 +102,13 @@ export default function AnimatedTimeline() {
       {/* SVG Timeline Path */}
       <svg 
         className="absolute top-0 left-0 w-full h-full pointer-events-none" 
-        viewBox="0 0 1000 2000" 
+        viewBox="0 0 1200 2200" 
         preserveAspectRatio="xMidYMin slice"
       >
         <path
           ref={pathRef}
-          d="M 500,0 C 800,125 800,375 500,500 C 200,625 200,875 500,1000 C 800,1125 800,1375 500,1500 C 200,1625 200,1875 500,2000"
+          // Starts at X=240 (left), curves to center X=600, then waves down center. Trims at the last node (375, 1850).
+          d="M 240,0 C 240,50 600,50 600,100 C 900,225 900,475 600,600 C 300,725 300,975 600,1100 C 900,1225 900,1475 600,1600 C 450,1662.5 375,1756.25 375,1850"
           fill="none"
           stroke="var(--color-on-surface)"
           strokeWidth="2"
@@ -116,46 +117,48 @@ export default function AnimatedTimeline() {
         />
         
         {/* Decorative nodes at the crests of the waves */}
-        <circle cx="725" cy="250" r="6" fill="var(--color-on-surface)" />
-        <circle cx="275" cy="750" r="6" fill="var(--color-on-surface)" />
-        <circle cx="725" cy="1250" r="6" fill="var(--color-on-surface)" />
-        <circle cx="275" cy="1750" r="6" fill="var(--color-on-surface)" />
+        {/* Right crests */}
+        <circle cx="825" cy="350" r="6" fill="var(--color-on-surface)" />
+        <circle cx="825" cy="1350" r="6" fill="var(--color-on-surface)" />
+        {/* Left crests */}
+        <circle cx="375" cy="850" r="6" fill="var(--color-on-surface)" />
+        <circle cx="375" cy="1850" r="6" fill="var(--color-on-surface)" />
       </svg>
 
-      {/* Card 1: Left */}
+      {/* Card 1: Left of the right crest */}
       <div 
         ref={card1Ref}
-        className="absolute top-[100px] left-4 md:left-[50px] w-[90%] md:w-[400px] p-8 border border-outline/20 bg-surface shadow-sm rounded-xl"
+        className="absolute top-[200px] left-4 md:left-[100px] w-[90%] md:w-[450px] p-8 border border-outline/20 bg-surface shadow-sm rounded-xl"
       >
         <p className="font-inter text-[16px] md:text-[18px] leading-relaxed text-on-surface">
           Formerly <strong>Senior Engagement Manager at McKinsey & Company</strong>, Imane is a <strong>co-founder</strong> of Celestia AI and leads client delivery and operations.
         </p>
       </div>
 
-      {/* Card 2: Right */}
+      {/* Card 2: Right of the left crest */}
       <div 
         ref={card2Ref}
-        className="absolute top-[600px] right-4 md:right-[50px] w-[90%] md:w-[400px] p-8 border border-outline/20 bg-surface shadow-sm rounded-xl"
+        className="absolute top-[700px] right-4 md:right-[100px] w-[90%] md:w-[450px] p-8 border border-outline/20 bg-surface shadow-sm rounded-xl"
       >
         <p className="font-inter text-[16px] md:text-[18px] leading-relaxed text-on-surface">
           At McKinsey, Imane drove large <strong>commercial growth and transformation programs</strong> across industries, with CXOs of leading companies, as well as governments.
         </p>
       </div>
 
-      {/* Card 3: Left */}
+      {/* Card 3: Left of the right crest */}
       <div 
         ref={card3Ref}
-        className="absolute top-[1100px] left-4 md:left-[50px] w-[90%] md:w-[400px] p-8 border border-outline/20 bg-surface shadow-sm rounded-xl"
+        className="absolute top-[1200px] left-4 md:left-[100px] w-[90%] md:w-[450px] p-8 border border-outline/20 bg-surface shadow-sm rounded-xl"
       >
         <p className="font-inter text-[16px] md:text-[18px] leading-relaxed text-on-surface">
           Prior to McKinsey, she worked in the <strong>S&OP team of Apple</strong>, in the UK.
         </p>
       </div>
 
-      {/* Card 4: Right */}
+      {/* Card 4: Right of the left crest */}
       <div 
         ref={card4Ref}
-        className="absolute top-[1600px] right-4 md:right-[50px] w-[90%] md:w-[400px] p-8 border border-outline/20 bg-surface shadow-sm rounded-xl flex flex-col gap-6"
+        className="absolute top-[1700px] right-4 md:right-[100px] w-[90%] md:w-[450px] p-8 border border-outline/20 bg-surface shadow-sm rounded-xl flex flex-col gap-6"
       >
         <p className="font-inter text-[16px] md:text-[18px] leading-relaxed text-on-surface">
           Imane is also a <strong>Professor of Strategy Consulting</strong> for Masters students at <strong>SKEMA Business School.</strong>

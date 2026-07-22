@@ -106,19 +106,9 @@ export default function Smooth3DSlideshow(props: Smooth3DSlideshowProps) {
         autoplayDirection = "rightToLeft",
         showTitle = true,
         titleFont,
-        titleColor = "#ffffff",
         titlePosition,
         style,
     } = props
-
-    const tp = titlePosition || {}
-    const corner: TitleCorner = tp.position || "bottomLeft"
-    const isTop = corner === "topLeft" || corner === "topRight"
-    const isRight = corner === "topRight" || corner === "bottomRight"
-    const padLeft = tp.paddingLeft ?? 22
-    const padRight = tp.paddingRight ?? 22
-    const padTop = tp.paddingTop ?? 24
-    const padBottom = tp.paddingBottom ?? 24
 
     const isStatic = useIsStaticRenderer()
     const list = slides && slides.length ? slides : DEFAULT_SLIDES

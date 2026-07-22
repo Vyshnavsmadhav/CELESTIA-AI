@@ -1,7 +1,9 @@
+/* eslint-disable @next/next/no-img-element */
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AnimatedPillarsText from "@/components/AnimatedPillarsText";
 import AnimatedTimeline from "@/components/AnimatedTimeline";
+import AnimatedTimelineJimmy from "@/components/AnimatedTimelineJimmy";
 
 export default function AboutPage() {
   return (
@@ -9,7 +11,7 @@ export default function AboutPage() {
       <Header />
       <main className="min-h-screen bg-surface">
         {/* Hero Section with Background Image */}
-        <div className="p-4 md:p-6 w-full h-screen min-h-[500px]">
+        <div id="hero" className="p-4 md:p-6 w-full h-screen min-h-[500px]">
           <div className="relative w-full h-full rounded-[32px] md:rounded-[48px] overflow-hidden flex flex-col justify-center items-center">
             <div className="absolute inset-0 z-0">
               <img 
@@ -34,8 +36,11 @@ export default function AboutPage() {
           <AnimatedPillarsText />
         </div>
           
-        {/* Animated Timeline Section */}
+        {/* Animated Timeline Section (Imane) */}
         <AnimatedTimeline />
+        
+        {/* Animated Timeline Section (Jimmy) */}
+        <AnimatedTimelineJimmy />
       </main>
       <Footer />
     </>
