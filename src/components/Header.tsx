@@ -36,7 +36,7 @@ export default function Header({ hideUntilScroll = false }: HeaderProps) {
         ? "translate-y-0 opacity-100" 
         : "-translate-y-full opacity-0 pointer-events-none"
     }`}>
-      <div className="flex justify-between items-center w-full px-6 md:px-section-padding-h py-6 max-w-container-max mx-auto">
+      <div className="flex justify-between items-center w-full px-6 md:px-section-padding-h py-4 max-w-container-max mx-auto">
         <div className="flex items-center gap-2">
           <span className="font-hanken text-[32px] font-light tracking-tighter text-primary">
             <Link href="/">Celestia AI</Link>

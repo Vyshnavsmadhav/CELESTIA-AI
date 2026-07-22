@@ -1,6 +1,14 @@
 import React from "react";
 import Smooth3DSlideshow from "./Smooth3DSlideshow";
 
+const expertiseSlides = [
+  { image: { src: "/images/carousels/ENERGY.webp", alt: "Energy" }, title: "ENERGY" },
+  { image: { src: "/images/carousels/GOVERNMENT.webp", alt: "Government" }, title: "GOVERNMENT" },
+  { image: { src: "/images/carousels/HEALTHCARE.webp", alt: "Healthcare" }, title: "HEALTHCARE" },
+  { image: { src: "/images/carousels/MANUFACTURING.webp", alt: "Manufacturing" }, title: "MANUFACTURING" },
+  { image: { src: "/images/carousels/RETAIL.webp", alt: "Retail" }, title: "RETAIL" },
+];
+
 export default function Expertise() {
   return (
     <section className="py-24 md:py-32 bg-surface relative z-10 border-b border-outline/10">
@@ -19,7 +27,8 @@ export default function Expertise() {
 
         <div className="w-full relative h-[450px] md:h-[600px] mb-32">
           <Smooth3DSlideshow 
-            showTitle={false} 
+            slides={expertiseSlides}
+            showTitle={true} 
             cardWidth={800} 
             cardHeight={500} 
             gap={10} 

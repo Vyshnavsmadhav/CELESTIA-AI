@@ -158,9 +158,6 @@ export default function Hero() {
           <h1 className="font-hanken text-[42px] sm:text-[60px] lg:text-[72px] font-light leading-[1.1] tracking-[-0.02em] text-white mb-6">
             We build AI that changes how enterprises operate.
           </h1>
-          <p className="font-inter text-[16px] sm:text-[18px] leading-[1.6] text-white/80 max-w-xl mx-auto">
-            Bespoke AI solutions engineered for complex business problems. We align bleeding-edge technology with fundamental economic drivers to deliver measurable margin improvement and operational velocity.
-          </p>
         </div>
 
         {/* Left Text (Scroll Phase) */}

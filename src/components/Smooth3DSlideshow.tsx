@@ -198,7 +198,7 @@ export default function Smooth3DSlideshow(props: Smooth3DSlideshowProps) {
         alignItems: "center",
         justifyContent: "center",
         perspective: `${PERSPECTIVE}px`,
-        overflow: "hidden",
+        overflow: "visible",
         outline: "none",
     }
 
@@ -234,14 +234,12 @@ export default function Smooth3DSlideshow(props: Smooth3DSlideshowProps) {
                     const rz = rel * sideTilt
                     const src = slide.image?.src || ""
 
-                    const cardStyle: CSSProperties = {
+                    const wrapperStyle: CSSProperties = {
                         position: "absolute",
                         left: "50%",
                         top: "50%",
                         width: cardWidth,
                         height: cardHeight,
-                        borderRadius: effectiveRadius,
-                        overflow: "hidden",
                         transformStyle: "preserve-3d",
                         transformOrigin: "center center",
                         transform: `translate(-50%, -50%) translateX(${tx}px) translateZ(${tz}px) rotateY(${ry}deg) rotateZ(${rz}deg) scale(${sc})`,
@@ -250,91 +248,84 @@ export default function Smooth3DSlideshow(props: Smooth3DSlideshowProps) {
                         cursor: autoplay || isActive ? "default" : "pointer",
                         pointerEvents:
                             visible && !isStatic && !autoplay ? "auto" : "none",
+                    }
+
+                    const cardStyle: CSSProperties = {
+                        position: "absolute",
+                        inset: 0,
+                        borderRadius: effectiveRadius,
+                        overflow: "hidden",
                         backgroundColor: "#1a1a1a",
                     }
 
                     return (
                         <div
                             key={i}
-                            style={cardStyle}
+                            style={wrapperStyle}
                             onClick={
                                 isStatic ? undefined : () => handleCardClick(i)
                             }
                             aria-label={slide.title}
                             aria-hidden={!visible}
                         >
-                            {src ? (
-                                <img
-                                    src={src}
-                                    alt={slide.image?.alt || slide.title || ""}
-                                    draggable={false}
-                                    style={{
-                                        position: "absolute",
-                                        inset: 0,
-                                        width: "100%",
-                                        height: "100%",
-                                        objectFit: "cover",
-                                        display: "block",
-                                        userSelect: "none",
-                                    }}
-                                />
-                            ) : null}
-
-                            {showTitle && (
-                                <>
-                                    <div
+                            <div style={cardStyle}>
+                                {src ? (
+                                    <img
+                                        src={src}
+                                        alt={slide.image?.alt || slide.title || ""}
+                                        draggable={false}
                                         style={{
                                             position: "absolute",
                                             inset: 0,
-                                            background: isTop
-                                                ? "linear-gradient(0deg, rgba(0,0,0,0) 35%, rgba(0,0,0,0.7) 100%)"
-                                                : "linear-gradient(180deg, rgba(0,0,0,0) 35%, rgba(0,0,0,0.7) 100%)",
-                                            pointerEvents: "none",
+                                            width: "100%",
+                                            height: "100%",
+                                            objectFit: "cover",
+                                            display: "block",
+                                            userSelect: "none",
                                         }}
                                     />
-                                    <div
+                                ) : null}
+
+                                <div
+                                    style={{
+                                        position: "absolute",
+                                        inset: 0,
+                                        background: "#000000",
+                                        opacity: isActive ? 0 : dim,
+                                        transition: `opacity ${dur}s ${ease}`,
+                                        pointerEvents: "none",
+                                    }}
+                                />
+                            </div>
+
+                            {showTitle && (
+                                <div
+                                    style={{
+                                        position: "absolute",
+                                        left: 0,
+                                        right: 0,
+                                        bottom: -60,
+                                        textAlign: "center",
+                                        pointerEvents: "none",
+                                        transform: "translateZ(30px)", // Pop the text out slightly in 3D
+                                    }}
+                                >
+                                    <span
+                                        className="reveal-text opacity-0 translate-y-8"
                                         style={{
-                                            position: "absolute",
-                                            left: padLeft,
-                                            right: padRight,
-                                            [isTop ? "top" : "bottom"]: isTop
-                                                ? padTop
-                                                : padBottom,
-                                            textAlign: isRight
-                                                ? "right"
-                                                : "left",
-                                            pointerEvents: "none",
+                                            color: "#000000",
+                                            fontSize: 28,
+                                            fontWeight: 700,
+                                            fontStyle: "italic",
+                                            lineHeight: "1.1em",
+                                            letterSpacing: "0.05em",
+                                            ...(titleFont || {}),
                                         }}
                                     >
-                                        <span
-                                            style={{
-                                                color: titleColor,
-                                                fontSize: 28,
-                                                fontWeight: 700,
-                                                lineHeight: "1.1em",
-                                                letterSpacing: "-0.02em",
-                                                whiteSpace: "pre-line",
-                                                textShadow:
-                                                    "0 2px 10px rgba(0,0,0,0.4)",
-                                                ...(titleFont || {}),
-                                            }}
-                                        >
-                                            {slide.title}
-                                        </span>
-                                    </div>
-                                </>
+                                        {slide.title}
+                                    </span>
+                                </div>
                             )}
-
-                            <div
-                                style={{
-                                    position: "absolute",
-                                    inset: 0,
-                                    background: "#000000",
-                                    opacity: isActive ? 0 : dim,
-                                    transition: `opacity ${dur}s ${ease}`,
-                                    pointerEvents: "none",
-                                }}
-                            />
                         </div>
                     )
                 })}
