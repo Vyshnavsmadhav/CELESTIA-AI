@@ -53,7 +53,7 @@ export default function Header({ hideUntilScroll = false }: HeaderProps) {
           </Link>
           <Link
             className="font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-on-surface-variant hover:text-primary transition-all duration-300 px-3 py-2 rounded-none scale-[0.98] active:scale-95"
-            href="/#philosophy"
+            href="/about"
           >
             ABOUT
           </Link>
@@ -65,7 +65,7 @@ export default function Header({ hideUntilScroll = false }: HeaderProps) {
           </Link>
           <Link
             className="font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-on-surface-variant hover:text-primary transition-all duration-300 px-3 py-2 rounded-none scale-[0.98] active:scale-95"
-            href="/#about-us"
+            href="/about"
           >
             ABOUT US
           </Link>
@@ -104,7 +104,7 @@ export default function Header({ hideUntilScroll = false }: HeaderProps) {
             <Link
               onClick={() => setIsOpen(false)}
               className="font-inter text-[14px] font-medium uppercase tracking-[0.15em] text-on-surface-variant hover:text-primary py-2"
-              href="/#philosophy"
+              href="/about"
             >
               ABOUT
             </Link>
@@ -118,7 +118,7 @@ export default function Header({ hideUntilScroll = false }: HeaderProps) {
             <Link
               onClick={() => setIsOpen(false)}
               className="font-inter text-[14px] font-medium uppercase tracking-[0.15em] text-on-surface-variant hover:text-primary py-2"
-              href="/#about-us"
+              href="/about"
             >
               ABOUT US
             </Link>

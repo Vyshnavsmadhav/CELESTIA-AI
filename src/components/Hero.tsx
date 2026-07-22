@@ -174,10 +174,10 @@ export default function Hero() {
   }, [isTouch]);
 
   return (
-    <section ref={containerRef} className="relative w-full h-[600vh] bg-[#09090b] overflow-clip z-20">
+    <section ref={containerRef} className="relative w-full h-[600vh] pointer-events-none z-0">
       <div 
         ref={stickyRef} 
-        className="sticky top-0 left-0 w-full h-screen overflow-hidden flex items-center justify-center"
+        className="fixed top-0 left-0 w-full h-screen overflow-hidden flex items-center justify-center bg-[#09090b] -z-10 pointer-events-auto"
         style={{ perspective: "1200px" }}
       >
         
