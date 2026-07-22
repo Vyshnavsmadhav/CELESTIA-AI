@@ -6,14 +6,16 @@ import Philosophy from "@/components/Philosophy";
 import Footer from "@/components/Footer";
 import StorySection from "@/components/StorySection";
 import Expertise from "@/components/Expertise";
+import GlobalTextReveal from "@/components/GlobalTextReveal";
 
 export default function Home() {
   return (
     <>
+      <GlobalTextReveal />
       <Header hideUntilScroll={true} />
       <main>
         <Hero />
-        <div className="relative z-10 bg-surface shadow-[0_-20px_50px_rgba(0,0,0,0.5)]">
+        <div className="relative z-10">
           <StorySection />
           <Expertise />
           <Methodology />

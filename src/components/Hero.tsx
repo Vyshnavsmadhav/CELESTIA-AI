@@ -21,12 +21,12 @@ export default function Hero() {
 
   // Scroll Texts
   const textLeftRef = useRef<HTMLDivElement>(null);
-  const textRightRef = useRef<HTMLDivElement>(null);
   
   const [isTouch, setIsTouch] = useState(false);
 
   useEffect(() => {
     const motionMediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsTouch(motionMediaQuery.matches);
 
     // Initial load animation for hero text
@@ -50,7 +50,7 @@ export default function Hero() {
           trigger: containerRef.current,
           start: "top top",
           end: "bottom bottom",
-          scrub: 1.5, // Smooth scrubbing
+          scrub: 0.8, // Add a slight scrub delay to smooth out discrete mouse wheel ticks
         },
       });
 
@@ -69,12 +69,14 @@ export default function Hero() {
         height: "33.75vw", 
         maxHeight: "225px",
         duration: 1.2,
+        force3D: true,
         ease: "power2.inOut"
       }, 0);
 
       tl.to(mainVideoRef.current, {
         borderRadius: "24px",
         duration: 1.2,
+        force3D: true,
         ease: "power2.inOut"
       }, 0);
       
@@ -84,6 +86,7 @@ export default function Hero() {
         rotateY: -25,
         rotateZ: 5,
         duration: 1.2,
+        force3D: true,
         ease: "power2.inOut"
       }, 1.2);
 
@@ -92,6 +95,7 @@ export default function Hero() {
         opacity: 1,
         borderRadius: "24px",
         duration: 1.2,
+        force3D: true,
         ease: "power2.out"
       }, 1.2);
       
@@ -100,6 +104,7 @@ export default function Hero() {
         opacity: 1,
         borderRadius: "24px",
         duration: 1.2,
+        force3D: true,
         ease: "power2.out"
       }, 1.2);
 
@@ -107,6 +112,7 @@ export default function Hero() {
       tl.to(centerClusterRef.current, {
         x: "22vw", // move right
         duration: 1.2,
+        force3D: true,
         ease: "power2.inOut"
       }, 2.4);
       
@@ -128,45 +134,8 @@ export default function Hero() {
         2.6
       );
 
-      // Hold phase
-      tl.to({}, { duration: 0.8 }, 3.6);
-
-      // Phase 3: Move cluster left, fade out left text, fade in right text
-      tl.to(textLeftRef.current, {
-        opacity: 0,
-        y: -20,
-        duration: 0.6,
-        ease: "power2.in"
-      }, 4.4);
-
-      tl.to(centerClusterRef.current, {
-        x: "-22vw", // move left
-        rotateY: 25, // flip rotation slightly
-        rotateX: 15,
-        duration: 1.5,
-        ease: "power2.inOut"
-      }, 4.4);
-
-      tl.to(textRightRef.current, {
-        opacity: 1,
-        duration: 0.1,
-      }, 4.9);
-
-      tl.fromTo(
-        textRightRef.current?.children || [],
-        { opacity: 0, y: 20 },
-        {
-          opacity: 1,
-          y: 0,
-          stagger: 0.15,
-          duration: 0.8,
-          ease: "power3.out"
-        },
-        4.9
-      );
-      
-      // Hold before unpinning
-      tl.to({}, { duration: 1 }, 5.9);
+      // Hold phase before unpinning
+      tl.to({}, { duration: 1 }, 3.6);
 
     }, containerRef);
 
@@ -174,10 +143,10 @@ export default function Hero() {
   }, [isTouch]);
 
   return (
-    <section ref={containerRef} className="relative w-full h-[600vh] pointer-events-none z-0">
+    <section ref={containerRef} className="relative w-full h-[350vh] pointer-events-none z-0">
       <div 
         ref={stickyRef} 
-        className="fixed top-0 left-0 w-full h-screen overflow-hidden flex items-center justify-center bg-[#09090b] -z-10 pointer-events-auto"
+        className="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center bg-[#09090b] pointer-events-auto"
         style={{ perspective: "1200px" }}
       >
         
@@ -214,24 +183,9 @@ export default function Hero() {
 
         </div>
 
-        {/* Right Text (Scroll Phase) */}
-        <div 
-          ref={textRightRef}
-          className="absolute right-[8%] md:right-[10%] w-[84%] md:w-[35%] opacity-0 flex flex-col gap-6 z-40 pointer-events-none"
-        >
-          <div className="flex items-center gap-2 text-white/50 uppercase tracking-widest text-xs font-semibold">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            DATA
-          </div>
-          <h2 className="text-white text-4xl md:text-5xl lg:text-[56px] font-light leading-[1.1] tracking-tight font-hanken">
-            The data powering the world&apos;s best AI.
-          </h2>
-          <p className="text-white/60 text-lg font-inter max-w-md">
-            The models at the frontier run on Scale data. We source contributors with advanced degrees and deliver at the tier frontier AI demands.
-          </p>
-        </div>
+
+
+
 
         {/* 3D Cluster */}
         <div 
@@ -250,7 +204,8 @@ export default function Hero() {
                loop
                muted
                playsInline
-               className="absolute inset-0 w-full h-full object-cover object-center z-0"
+               preload="auto"
+               className="absolute inset-0 w-full h-full object-cover object-center z-0 will-change-transform"
              >
                <source src="/VN20260716_101340.mp4" type="video/mp4" />
              </video>

@@ -40,7 +40,6 @@ function MethodologyStep({ pillar }: { pillar: Pillar }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -62,99 +61,32 @@ function MethodologyStep({ pillar }: { pillar: Pillar }) {
     return () => observer.disconnect();
   }, [isVisible]);
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    // Subtle parallax relative to the window center (Max movement ~12px)
-    if (!isVisible) return; // Only parallax after reveal
-    const x = (e.clientX / window.innerWidth - 0.5) * 24; 
-    const y = (e.clientY / window.innerHeight - 0.5) * 24;
-    setMousePos({ x, y });
-  };
-
-  const handleMouseLeave = () => {
-    setMousePos({ x: 0, y: 0 });
-  };
-
   return (
     <div 
       ref={containerRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className="relative min-h-[60vh] flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-12 px-4 md:px-12 w-full py-16 overflow-hidden"
+      className="relative flex flex-col items-start justify-center w-full py-16 overflow-hidden"
     >
-      {/* Left Image Parallax Wrapper */}
-      <div 
-        className="hidden lg:block w-1/4 max-w-[320px]"
-        style={{
-          transform: `translate3d(${mousePos.x}px, ${mousePos.y}px, 0)`,
-          transition: 'transform 400ms cubic-bezier(0.25, 1, 0.5, 1)'
-        }}
-      >
-        {/* Left Image Reveal Animation */}
-        <div 
-          className="w-full aspect-square rounded-3xl overflow-hidden shadow-2xl"
-          style={{
-             transform: isVisible ? `translate3d(0, 0, 0)` : `translate3d(-120%, 0, 0)`,
-             opacity: isVisible ? 1 : 0,
-             transition: "all 1000ms cubic-bezier(0.22, 1, 0.36, 1)"
-          }}
-        >
-          <img src={pillar.image} alt="" className="w-full h-full object-cover scale-x-[-1]" />
-        </div>
-      </div>
 
-      {/* Center Text Reveal */}
+
+      {/* Text Reveal */}
       <div 
         ref={textRef}
-        className="flex flex-col items-center justify-center w-full lg:w-1/2"
+        className="flex flex-col items-start justify-center w-full max-w-4xl"
       >
         {pillar.number && (
-          <span className="font-mono text-xl md:text-2xl text-primary/40 font-semibold tracking-[0.2em] mb-4 uppercase transition-all duration-1000 delay-100"
-            style={{
-              transform: isVisible ? "translate3d(0,0,0)" : "translate3d(0, 30px, 0)",
-              opacity: isVisible ? 1 : 0,
-              transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)"
-            }}>
+          <span className="reveal-text opacity-0 translate-y-8 font-mono text-xl md:text-2xl text-white/40 font-semibold tracking-[0.2em] mb-4 uppercase">
             Phase {pillar.number}
           </span>
         )}
-        <h2 className="font-hanken text-[24px] sm:text-[32px] md:text-[36px] lg:text-[40px] font-bold leading-[1.2] tracking-tight text-primary drop-shadow-sm mb-6 mix-blend-multiply bg-white/40 px-6 py-4 rounded-2xl backdrop-blur-md w-full text-center transition-all duration-1000 delay-200"
-            style={{
-              transform: isVisible ? "translate3d(0,0,0)" : "translate3d(0, 30px, 0)",
-              opacity: isVisible ? 1 : 0,
-              transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)"
-            }}>
+        <h2 className="reveal-text opacity-0 translate-y-8 font-hanken text-[24px] sm:text-[32px] md:text-[36px] lg:text-[40px] font-bold leading-[1.2] tracking-tight text-white drop-shadow-sm mb-6 w-full text-left">
           {pillar.title}
         </h2>
-        <p className="font-inter text-[16px] md:text-[18px] leading-relaxed text-on-surface-variant w-full font-light bg-white/60 p-6 rounded-xl backdrop-blur-sm text-center transition-all duration-1000 delay-300"
-            style={{
-              transform: isVisible ? "translate3d(0,0,0)" : "translate3d(0, 30px, 0)",
-              opacity: isVisible ? 1 : 0,
-              transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)"
-            }}>
+        <p className="reveal-text opacity-0 translate-y-8 font-inter text-[16px] md:text-[18px] leading-relaxed text-white/80 w-full font-light text-left">
           {pillar.description}
         </p>
       </div>
 
-      {/* Right Image Parallax Wrapper (Moves opposite direction) */}
-      <div 
-        className="hidden lg:block w-1/4 max-w-[320px]"
-        style={{
-          transform: `translate3d(${mousePos.x * -1}px, ${mousePos.y * -1}px, 0)`,
-          transition: 'transform 400ms cubic-bezier(0.25, 1, 0.5, 1)'
-        }}
-      >
-        {/* Right Image Reveal Animation */}
-        <div 
-          className="w-full aspect-square rounded-3xl overflow-hidden shadow-2xl"
-          style={{
-             transform: isVisible ? `translate3d(0, 0, 0)` : `translate3d(120%, 0, 0)`,
-             opacity: isVisible ? 1 : 0,
-             transition: "all 1000ms cubic-bezier(0.22, 1, 0.36, 1)"
-          }}
-        >
-          <img src={pillar.image} alt="" className="w-full h-full object-cover" />
-        </div>
-      </div>
+
     </div>
   );
 }
@@ -162,20 +94,37 @@ function MethodologyStep({ pillar }: { pillar: Pillar }) {
 export default function Methodology() {
   return (
     <section 
-      className="relative bg-surface flex flex-col items-center py-24 overflow-hidden border-y border-outline/10"
+      className="relative bg-surface flex flex-col items-center py-24 overflow-hidden border-y border-outline/10 px-6 md:px-12"
       id="methodology"
     >
-      <div className="w-full max-w-7xl mx-auto flex flex-col items-center">
-        {/* Intro Text */}
-        <div className="flex flex-col items-center justify-center text-center px-4 mb-24">
-          <h2 className="font-hanken text-[48px] sm:text-[64px] md:text-[96px] font-light leading-none tracking-tight text-primary uppercase">
-            WHAT WE DO
-          </h2>
-        </div>
+      <div className="w-full max-w-container-max mx-auto relative p-8 md:p-12 z-20 pb-24">
+        <div className="absolute inset-0 bg-[#243322] rounded-[32px] md:rounded-[48px] overflow-hidden" />
+        
+        <div className="relative z-10 w-full flex flex-col items-center">
+          {/* Intro Text */}
+          <div className="flex flex-col items-center justify-center text-center px-4 mb-24 pt-12">
+            <h2 className="reveal-text opacity-0 translate-y-8 font-hanken text-[48px] sm:text-[64px] md:text-[96px] font-light leading-none tracking-tight text-white uppercase">
+              WHAT WE DO
+            </h2>
+          </div>
 
-        {pillars.map((pillar, i) => (
-          <MethodologyStep key={i} pillar={pillar} />
-        ))}
+          <div className="relative w-full max-w-5xl mx-auto flex flex-col">
+            {/* Vertical Timeline Line */}
+            <div className="absolute top-16 bottom-16 left-[20px] md:left-[40px] w-[2px] bg-white/20 z-0" />
+
+            {pillars.map((pillar, i) => (
+              <div key={i} className="relative z-10 w-full flex items-center">
+                {/* Node Circle */}
+                <div className="absolute left-[20px] md:left-[40px] top-1/2 -translate-x-[calc(50%-1px)] -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 rounded-full bg-white shadow-[0_0_15px_rgba(255,255,255,0.6)] z-20" />
+                
+                {/* Step Content */}
+                <div className="pl-16 md:pl-28 w-full">
+                  <MethodologyStep pillar={pillar} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
